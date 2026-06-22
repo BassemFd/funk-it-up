@@ -1,0 +1,31 @@
+{
+  "name": "@funk-it-up/api",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@apollo/server": "^4.11.3",
+    "@funk-it-up/domain": "workspace:*",
+    "graphql": "^16.9.0",
+    "graphql-subscriptions": "^2.0.0",
+    "graphql-ws": "^5.16.0",
+    "ioredis": "^5.4.1",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@funk-it-up/config": "workspace:*",
+    "@types/node": "^22.10.2",
+    "@types/ws": "^8.5.13",
+    "typescript": "^5.7.3",
+    "tsx": "^4.19.2",
+    "vitest": "^2.1.8"
+  }
+}

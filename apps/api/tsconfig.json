@@ -1,0 +1,9 @@
+{
+  "extends": "@funk-it-up/config/tsconfig",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "lib": ["ES2022"]
+  },
+  "include": ["src/**/*", "__tests__/**/*"]
+}
