@@ -1,0 +1,8 @@
+{
+  "extends": "@funk-it-up/config/tsconfig",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src"
+  },
+  "include": ["src/**/*", "__tests__/**/*"]
+}
