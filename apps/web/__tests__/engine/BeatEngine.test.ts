@@ -19,13 +19,13 @@ describe("Feature: BeatEngine", () => {
     });
 
     it("should advance to beat 1 after one interval", () => {
-      engine.tick(613);
+      engine.tick(engine.intervalMs + 1);
 
       expect(engine.currentBeat).toBe(1);
     });
 
     it("should advance to beat 4 after 4 intervals", () => {
-      engine.tick(2449); // ≈ 4 * 612.24
+      engine.tick(engine.intervalMs * 4 + 1);
 
       expect(engine.currentBeat).toBe(4);
     });
@@ -35,7 +35,7 @@ describe("Feature: BeatEngine", () => {
     });
 
     it("should update nextBeatAt after advancing", () => {
-      engine.tick(613);
+      engine.tick(engine.intervalMs + 1);
 
       expect(engine.nextBeatAt).toBeCloseTo(1224.49, 1);
     });
@@ -47,7 +47,7 @@ describe("Feature: BeatEngine", () => {
       const beats: number[] = [];
 
       engine.onBeat((beatNumber) => beats.push(beatNumber));
-      engine.tick(1300); // crosses beats 1 and 2
+      engine.tick(engine.intervalMs * 2 + 1); // crosses beats 1 and 2
 
       expect(beats).toContain(1);
       expect(beats).toContain(2);
@@ -58,7 +58,7 @@ describe("Feature: BeatEngine", () => {
       const downbeats: number[] = [];
 
       engine.onDownbeat((beat) => downbeats.push(beat));
-      engine.tick(2500); // covers beats 0-4
+      engine.tick(engine.intervalMs * 4 + 1); // covers beats 0–4
 
       expect(downbeats).toHaveLength(1);
       expect(downbeats[0]).toBe(4);
