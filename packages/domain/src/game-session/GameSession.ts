@@ -31,15 +31,14 @@ interface SessionState {
 
 export class GameSession {
   readonly id: GameSessionId;
+  readonly player: Player;
+  readonly track: Track;
   readonly status: SessionStatus;
   readonly score: Score;
   readonly rhythm: Rhythm;
   readonly startedAt: Timestamp | null;
   readonly endedAt: Timestamp | null;
   readonly domainEvents: DomainEvent[];
-
-  private readonly player: Player;
-  private readonly track: Track;
 
   private constructor(state: SessionState) {
     this.id = state.id;
