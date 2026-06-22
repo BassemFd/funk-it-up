@@ -9,9 +9,17 @@ interface Props {
 
 export function BeatLoop({ engine }: Props) {
   const startTimeRef = useRef<number | null>(null);
+  const prevStatusRef = useRef<string>("IDLE");
 
   useFrame(({ clock }) => {
     const { status } = gameStore.getState();
+
+    if (prevStatusRef.current !== "PLAYING" && status === "PLAYING") {
+      startTimeRef.current = null;
+      engine.reset();
+    }
+    prevStatusRef.current = status;
+
     if (status !== "PLAYING") return;
 
     if (startTimeRef.current === null) {

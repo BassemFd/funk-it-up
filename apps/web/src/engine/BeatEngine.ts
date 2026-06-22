@@ -68,6 +68,11 @@ export class BeatEngine {
     return "MISS";
   }
 
+  clearCallbacks(): void {
+    this.beatCallbacks = [];
+    this.downbeatCallbacks = [];
+  }
+
   reset(): void {
     this._elapsedMs = 0;
     this._currentBeat = 0;

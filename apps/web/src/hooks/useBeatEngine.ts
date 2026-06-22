@@ -11,6 +11,7 @@ export function useBeatEngine(bpm: number) {
 
   useEffect(() => {
     const engine = engineRef.current!;
+    engine.clearCallbacks();
 
     engine.onBeat(() => {
       const { status, advanceCharacter } = gameStore.getState();
@@ -19,11 +20,10 @@ export function useBeatEngine(bpm: number) {
       }
     });
 
-    engine.onDownbeat(() => {
-      // "The One" pulse — used by scene for visual feedback
-    });
-
-    return () => engine.reset();
+    return () => {
+      engine.clearCallbacks();
+      engine.reset();
+    };
   }, [bpm]);
 
   return engineRef.current;
