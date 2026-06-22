@@ -1,5 +1,6 @@
 import { useRef, useEffect } from "react";
 import { BeatEngine } from "../engine/BeatEngine";
+import { PLATFORM_SPACING } from "../engine/PlatformGenerator";
 import { gameStore } from "../store/useGameStore";
 
 export function useBeatEngine(bpm: number) {
@@ -17,13 +18,13 @@ export function useBeatEngine(bpm: number) {
       const state = gameStore.getState();
       if (state.status !== "PLAYING") return;
 
-      const wasJumping = state.character.isJumping;
-      state.advanceCharacter({ deltaX: 1.5 });
-
-      // Beat 2 of every measure = GAP — if not airborne, auto-MISS
-      if (beatNumber % 4 === 2 && !wasJumping) {
+      // Gap check BEFORE advancing: character is currently AT beatNumber's platform
+      // beat%4===2 = GAP — must be airborne to cross it
+      if (beatNumber % 4 === 2 && !state.character.isJumping) {
         gameStore.getState().registerJump("MISS");
       }
+
+      gameStore.getState().advanceCharacter({ deltaX: PLATFORM_SPACING });
     });
 
     return () => {

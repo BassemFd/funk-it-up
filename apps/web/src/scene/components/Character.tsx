@@ -3,6 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { Mesh } from "three";
 import { useGameStore } from "../../store/useGameStore";
 import { gameStore } from "../../store/useGameStore";
+import { PLATFORM_SPACING } from "../../engine/PlatformGenerator";
 
 const JUMP_HEIGHT = 2.5;
 const JUMP_DURATION = 0.35; // seconds
@@ -10,14 +11,19 @@ const JUMP_DURATION = 0.35; // seconds
 export function Character() {
   const meshRef = useRef<Mesh>(null);
   const jumpStartRef = useRef<number | null>(null);
+  const smoothXRef = useRef(0);
   const characterX = useGameStore((s) => s.character.x);
   const isJumping = useGameStore((s) => s.character.isJumping);
 
   useFrame(({ clock }) => {
     if (!meshRef.current) return;
 
-    // Follow x
-    meshRef.current.position.x = characterX;
+    // Snap on game restart (characterX resets to 0 while smoothX is far ahead)
+    if (characterX < smoothXRef.current - PLATFORM_SPACING * 2) {
+      smoothXRef.current = characterX;
+    }
+    smoothXRef.current += (characterX - smoothXRef.current) * 0.12;
+    meshRef.current.position.x = smoothXRef.current;
 
     // Jump arc
     if (isJumping) {

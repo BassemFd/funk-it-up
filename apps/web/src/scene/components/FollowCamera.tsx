@@ -1,10 +1,10 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { useGameStore } from "../../store/useGameStore";
 
-const CAMERA_OFFSET_X = -4;
-const CAMERA_Y = 3;
-const CAMERA_Z = 12;
-const LERP_SPEED = 0.08;
+const CAMERA_OFFSET_X = -6;
+const CAMERA_Y = 4;
+const CAMERA_Z = 14;
+const LERP_SPEED = 0.18;
 
 export function FollowCamera() {
   const { camera } = useThree();

@@ -40,7 +40,7 @@ function seededRng(seed: string): () => number {
 // beat 3 → GROUND
 const UNIT_WIDTH = 3;
 const PLATFORM_Y = 0;
-const SPACING = 4; // units between beats
+export const PLATFORM_SPACING = 4; // world units between beats
 
 export class PlatformGenerator {
   private readonly intervalMs: number;
@@ -62,7 +62,7 @@ export class PlatformGenerator {
 
     for (let beat = 0; beat < totalBeats; beat++) {
       const beatInMeasure = beat % beatsPerMeasure;
-      const x = beat * SPACING;
+      const x = beat * PLATFORM_SPACING;
 
       if (beatInMeasure === 0) {
         // The ONE — rhythm pickup appears ~30% of the time
