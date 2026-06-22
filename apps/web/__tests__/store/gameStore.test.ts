@@ -114,8 +114,9 @@ describe("Feature: GameStore", () => {
   describe("Given the game ends", () => {
     it("should expose final score on GAME_OVER", () => {
       store.getState().startGame({ bpm: 98, trackId: "t" });
-      store.getState().registerJump("PERFECT");
-      for (let i = 0; i < 5; i++) store.getState().registerJump("MISS");
+      store.getState().registerJump("PERFECT");   // 100pts, combo: 1
+      store.getState().registerJump("MISS");      // combo shield — rhythm intact
+      for (let i = 0; i < 5; i++) store.getState().registerJump("MISS"); // 5 rythmes
 
       const { score, status } = store.getState();
       expect(status).toBe("GAME_OVER");
