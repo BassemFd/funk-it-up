@@ -1,0 +1,10 @@
+{
+  "extends": "@funk-it-up/config/tsconfig",
+  "compilerOptions": {
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler",
+    "outDir": "./dist"
+  },
+  "include": ["src/**/*", "__tests__/**/*"]
+}
