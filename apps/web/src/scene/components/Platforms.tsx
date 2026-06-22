@@ -26,19 +26,21 @@ export function Platforms({ bpm, seed }: Props) {
 
   return (
     <group>
-      {platforms.map((p: Platform) => (
-        <mesh
-          key={`${p.beatNumber}-${p.type}`}
-          position={[p.x, p.y, 0]}
-        >
-          <boxGeometry args={[p.width, p.height, 1.5]} />
-          <meshStandardMaterial
-            color={PLATFORM_COLORS[p.type]}
-            emissive={PLATFORM_EMISSIVE[p.type]}
-            emissiveIntensity={p.type === PlatformType.THE_ONE ? 0.8 : 0.2}
-          />
-        </mesh>
-      ))}
+      {platforms
+        .filter((p: Platform) => p.type !== PlatformType.GAP)
+        .map((p: Platform) => (
+          <mesh
+            key={`${p.beatNumber}-${p.type}`}
+            position={[p.x, p.y, 0]}
+          >
+            <boxGeometry args={[p.width, p.height, 1.5]} />
+            <meshStandardMaterial
+              color={PLATFORM_COLORS[p.type]}
+              emissive={PLATFORM_EMISSIVE[p.type]}
+              emissiveIntensity={p.type === PlatformType.THE_ONE ? 0.8 : 0.2}
+            />
+          </mesh>
+        ))}
     </group>
   );
 }
