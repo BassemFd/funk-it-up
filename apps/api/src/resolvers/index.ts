@@ -1,11 +1,12 @@
 import { GraphQLScalarType, Kind } from "graphql";
+import { PubSub } from "graphql-subscriptions";
 import { GameSessionResolver } from "./mutation/GameSessionResolver.js";
 import { PlayerResolver } from "./mutation/PlayerResolver.js";
 import { LeaderboardResolver } from "./query/LeaderboardResolver.js";
 import { IPlayerRepository } from "../repositories/IPlayerRepository.js";
 import { IGameSessionRepository } from "../repositories/IGameSessionRepository.js";
 import { ILeaderboardRepository } from "../repositories/ILeaderboardRepository.js";
-import { pubsub, LEADERBOARD_UPDATED } from "../pubsub.js";
+import { LEADERBOARD_UPDATED } from "../pubsub.js";
 
 const DateTimeScalar = new GraphQLScalarType({
   name: "DateTime",
@@ -18,6 +19,7 @@ export function buildResolvers(
   playerRepo: IPlayerRepository,
   sessionRepo: IGameSessionRepository,
   leaderboardRepo: ILeaderboardRepository,
+  pubsub: PubSub,
 ) {
   const playerRes = new PlayerResolver(playerRepo);
   const sessionRes = new GameSessionResolver(sessionRepo, playerRepo, leaderboardRepo);
