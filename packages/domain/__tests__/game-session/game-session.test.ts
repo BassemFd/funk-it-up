@@ -211,9 +211,9 @@ describe("Feature: GameSession — miss routing (combo-shield)", () => {
   describe("When the last rythme is lost", () => {
     it("should emit GameOver event", () => {
       let session = startedSession();
-      // 5 misses sans combo → 5 rythmes perdus
+      // 5 misses sans combo → midpoints entre beats à 98 BPM (dist ≈ 305ms, bien > 80ms)
       for (let i = 0; i < 5; i++) {
-        session = session.registerJump({ at: Timestamp.of(306 + i * 2000) });
+        session = session.registerJump({ at: Timestamp.of(306 + i * 612) });
       }
 
       const event = session.domainEvents.find(
@@ -225,21 +225,22 @@ describe("Feature: GameSession — miss routing (combo-shield)", () => {
     it("should transition to GAME_OVER status", () => {
       let session = startedSession();
       for (let i = 0; i < 5; i++) {
-        session = session.registerJump({ at: Timestamp.of(306 + i * 2000) });
+        session = session.registerJump({ at: Timestamp.of(306 + i * 612) });
       }
 
       expect(session.status).toBe("GAME_OVER");
     });
 
     it("should freeze the score at the moment of game over", () => {
+      // Midpoints between beats at 98 BPM (intervalMs ≈ 612ms) — all > 80ms from any beat
       const session = startedSession()
-        .registerJump({ at: Timestamp.of(612) })   // PERFECT → 100pts
-        .registerJump({ at: Timestamp.of(306) })   // MISS → perd combo (pas de rythme)
-        .registerJump({ at: Timestamp.of(2306) })  // MISS → rythme 4
-        .registerJump({ at: Timestamp.of(4306) })  // MISS → rythme 3
-        .registerJump({ at: Timestamp.of(6306) })  // MISS → rythme 2
-        .registerJump({ at: Timestamp.of(8306) })  // MISS → rythme 1
-        .registerJump({ at: Timestamp.of(10306) }); // MISS → game over
+        .registerJump({ at: Timestamp.of(612) })   // PERFECT → 100pts, combo: 1
+        .registerJump({ at: Timestamp.of(306) })   // MISS → ComboShattered (rythmes intacts)
+        .registerJump({ at: Timestamp.of(918) })   // MISS → rythme 4
+        .registerJump({ at: Timestamp.of(1530) })  // MISS → rythme 3
+        .registerJump({ at: Timestamp.of(2142) })  // MISS → rythme 2
+        .registerJump({ at: Timestamp.of(2754) })  // MISS → rythme 1
+        .registerJump({ at: Timestamp.of(3366) }); // MISS → game over
 
       expect(session.score.points).toBe(100);
       expect(session.status).toBe("GAME_OVER");
@@ -248,7 +249,7 @@ describe("Feature: GameSession — miss routing (combo-shield)", () => {
     it("should not allow jumps after game over", () => {
       let session = startedSession();
       for (let i = 0; i < 5; i++) {
-        session = session.registerJump({ at: Timestamp.of(306 + i * 2000) });
+        session = session.registerJump({ at: Timestamp.of(306 + i * 612) });
       }
 
       expect(() =>
