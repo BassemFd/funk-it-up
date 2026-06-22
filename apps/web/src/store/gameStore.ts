@@ -1,6 +1,7 @@
 import { createStore } from "zustand/vanilla";
 import { Score, Rhythm } from "@funk-it-up/domain";
 import type { BeatRating } from "@funk-it-up/domain";
+import { PlatformGenerator, PlatformType } from "../engine/PlatformGenerator";
 
 type GameStatus = "IDLE" | "PLAYING" | "GAME_OVER";
 
@@ -29,12 +30,15 @@ interface GameState {
   score: ScoreState;
   rhythm: RhythmState;
   character: CharacterState;
+  lastRating: BeatRating | null;
+  theOneBeats: Set<number>;
 
   startGame: (opts: { bpm: number; trackId: string }) => void;
-  registerJump: (rating: BeatRating) => void;
+  registerJump: (rating: BeatRating, beatNumber?: number) => void;
   gainRhythm: () => void;
   landCharacter: () => void;
   advanceCharacter: (opts: { deltaX: number }) => void;
+  clearRating: () => void;
   reset: () => void;
 }
 
@@ -66,8 +70,17 @@ export function createGameStore() {
     score: toScoreState(initialScore),
     rhythm: toRhythmState(initialRhythm),
     character: { x: 0, isJumping: false },
+    lastRating: null,
+    theOneBeats: new Set(),
 
     startGame({ bpm, trackId }) {
+      const generator = PlatformGenerator.create({ bpm, seed: trackId });
+      const platforms = generator.generate({ measures: 32 });
+      const theOneBeats = new Set(
+        platforms
+          .filter((p) => p.type === PlatformType.THE_ONE)
+          .map((p) => p.beatNumber),
+      );
       set({
         status: "PLAYING",
         trackId,
@@ -75,35 +88,42 @@ export function createGameStore() {
         score: toScoreState(Score.empty()),
         rhythm: toRhythmState(Rhythm.full()),
         character: { x: 0, isJumping: false },
+        lastRating: null,
+        theOneBeats,
       });
     },
 
-    registerJump(rating) {
+    registerJump(rating, beatNumber) {
       const state = get();
       if (state.status !== "PLAYING") return;
 
       const currentScore = rebuildScore(state.score);
       const currentRhythm = rebuildRhythm(state.rhythm);
+      const updates: Partial<GameState> = { lastRating: rating };
 
       if (rating === "MISS") {
         if (currentScore.hasActiveCombo) {
-          // combo shield — shatter combo, rythmes intacts
-          set({ score: toScoreState(currentScore.add("MISS")) });
+          Object.assign(updates, { score: toScoreState(currentScore.add("MISS")) });
         } else {
           const newRhythm = currentRhythm.lose();
-          const newStatus = newRhythm.isDead ? "GAME_OVER" : "PLAYING";
-          set({
+          Object.assign(updates, {
             rhythm: toRhythmState(newRhythm),
-            status: newStatus,
+            status: newRhythm.isDead ? ("GAME_OVER" as GameStatus) : ("PLAYING" as GameStatus),
           });
         }
-        return;
+      } else {
+        let newRhythm = currentRhythm;
+        if (beatNumber !== undefined && state.theOneBeats.has(beatNumber)) {
+          newRhythm = currentRhythm.gain();
+        }
+        Object.assign(updates, {
+          score: toScoreState(currentScore.add(rating)),
+          rhythm: toRhythmState(newRhythm),
+          character: { ...state.character, isJumping: true },
+        });
       }
 
-      set({
-        score: toScoreState(currentScore.add(rating)),
-        character: { ...state.character, isJumping: true },
-      });
+      set(updates as GameState);
     },
 
     gainRhythm() {
@@ -124,6 +144,10 @@ export function createGameStore() {
       }));
     },
 
+    clearRating() {
+      set({ lastRating: null });
+    },
+
     reset() {
       set({
         status: "IDLE",
@@ -132,6 +156,8 @@ export function createGameStore() {
         score: toScoreState(Score.empty()),
         rhythm: toRhythmState(Rhythm.full()),
         character: { x: 0, isJumping: false },
+        lastRating: null,
+        theOneBeats: new Set(),
       });
     },
   }));

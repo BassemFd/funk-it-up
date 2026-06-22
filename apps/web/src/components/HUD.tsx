@@ -1,8 +1,33 @@
+import { useEffect, useRef } from "react";
 import { useGameStore } from "../store/useGameStore";
+import type { BeatRating } from "@funk-it-up/domain";
+
+const RATING_COLORS: Record<BeatRating, string> = {
+  PERFECT: "#f0e060",
+  GOOD: "#40e0a0",
+  MISS: "#e04060",
+};
 
 export function HUD() {
   const score = useGameStore((s) => s.score);
   const rhythm = useGameStore((s) => s.rhythm);
+  const lastRating = useGameStore((s) => s.lastRating);
+  const clearRating = useGameStore((s) => s.clearRating);
+
+  // Track a key per rating flash to force CSS animation remount
+  const ratingKeyRef = useRef(0);
+  const displayedRating = useRef<BeatRating | null>(null);
+
+  if (lastRating !== null) {
+    displayedRating.current = lastRating;
+    ratingKeyRef.current += 1;
+  }
+
+  useEffect(() => {
+    if (!lastRating) return;
+    const t = setTimeout(clearRating, 700);
+    return () => clearTimeout(t);
+  }, [lastRating, clearRating]);
 
   return (
     <div style={styles.hud}>
@@ -13,6 +38,20 @@ export function HUD() {
           <span style={styles.combo}>×{score.multiplier} COMBO {score.combo}</span>
         )}
       </div>
+
+      {/* Rating flash */}
+      {displayedRating.current && lastRating && (
+        <div
+          key={ratingKeyRef.current}
+          style={{
+            ...styles.ratingFlash,
+            color: RATING_COLORS[displayedRating.current],
+            textShadow: `0 0 20px ${RATING_COLORS[displayedRating.current]}`,
+          }}
+        >
+          {displayedRating.current}
+        </div>
+      )}
 
       {/* Rhythm slots */}
       <div style={styles.rhythmRow}>
@@ -61,6 +100,16 @@ const styles: Record<string, React.CSSProperties> = {
     color: "#e040fb",
     textShadow: "0 0 8px #e040fb",
     letterSpacing: 1,
+  },
+  ratingFlash: {
+    position: "absolute",
+    top: "38%",
+    left: "50%",
+    fontSize: 36,
+    fontWeight: "bold",
+    letterSpacing: 4,
+    animation: "ratingFade 0.7s ease-out forwards",
+    pointerEvents: "none",
   },
   rhythmRow: {
     display: "flex",

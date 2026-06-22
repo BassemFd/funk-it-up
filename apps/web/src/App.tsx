@@ -30,7 +30,8 @@ export function App() {
       if (status !== "PLAYING") return;
 
       const rating = engine.rateJump(engine.elapsedMs);
-      registerJump(rating);
+      const beatNumber = Math.round(engine.elapsedMs / engine.intervalMs);
+      registerJump(rating, beatNumber);
     };
 
     const onKey = (e: KeyboardEvent) => {

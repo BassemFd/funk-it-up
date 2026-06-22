@@ -13,10 +13,16 @@ export function useBeatEngine(bpm: number) {
     const engine = engineRef.current!;
     engine.clearCallbacks();
 
-    engine.onBeat(() => {
-      const { status, advanceCharacter } = gameStore.getState();
-      if (status === "PLAYING") {
-        advanceCharacter({ deltaX: 1.5 });
+    engine.onBeat((beatNumber) => {
+      const state = gameStore.getState();
+      if (state.status !== "PLAYING") return;
+
+      const wasJumping = state.character.isJumping;
+      state.advanceCharacter({ deltaX: 1.5 });
+
+      // Beat 2 of every measure = GAP — if not airborne, auto-MISS
+      if (beatNumber % 4 === 2 && !wasJumping) {
+        gameStore.getState().registerJump("MISS");
       }
     });
 
