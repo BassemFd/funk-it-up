@@ -1,10 +1,8 @@
-import { randomUUID } from "crypto";
-
 export class PlayerId {
   private constructor(readonly value: string) {}
 
   static generate(): PlayerId {
-    return new PlayerId(randomUUID());
+    return new PlayerId(globalThis.crypto.randomUUID());
   }
 
   static of(value: string): PlayerId {
