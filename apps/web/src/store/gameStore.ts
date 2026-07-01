@@ -23,7 +23,7 @@ interface RhythmState {
   slots: boolean[];
 }
 
-interface GameState {
+export interface GameState {
   status: GameStatus;
   trackId: string | null;
   bpm: number | null;
@@ -35,6 +35,7 @@ interface GameState {
 
   startGame: (opts: { bpm: number; trackId: string }) => void;
   registerJump: (rating: BeatRating, beatNumber?: number) => void;
+  missGap: () => void;
   gainRhythm: () => void;
   landCharacter: () => void;
   advanceCharacter: (opts: { deltaX: number }) => void;
@@ -96,34 +97,40 @@ export function createGameStore() {
     registerJump(rating, beatNumber) {
       const state = get();
       if (state.status !== "PLAYING") return;
+      if (state.character.isJumping) return; // already airborne
 
-      const currentScore = rebuildScore(state.score);
-      const currentRhythm = rebuildRhythm(state.rhythm);
-      const updates: Partial<GameState> = { lastRating: rating };
+      // Character always jumps regardless of timing rating
+      const updates: Partial<GameState> = {
+        lastRating: rating,
+        character: { ...state.character, isJumping: true },
+      };
 
-      if (rating === "MISS") {
-        if (currentScore.hasActiveCombo) {
-          Object.assign(updates, { score: toScoreState(currentScore.add("MISS")) });
-        } else {
-          const newRhythm = currentRhythm.lose();
-          Object.assign(updates, {
-            rhythm: toRhythmState(newRhythm),
-            status: newRhythm.isDead ? ("GAME_OVER" as GameStatus) : ("PLAYING" as GameStatus),
-          });
-        }
-      } else {
-        let newRhythm = currentRhythm;
+      if (rating !== "MISS") {
+        const currentScore = rebuildScore(state.score);
+        let newRhythm = rebuildRhythm(state.rhythm);
         if (beatNumber !== undefined && state.theOneBeats.has(beatNumber)) {
-          newRhythm = currentRhythm.gain();
+          newRhythm = newRhythm.gain();
         }
         Object.assign(updates, {
           score: toScoreState(currentScore.add(rating)),
           rhythm: toRhythmState(newRhythm),
-          character: { ...state.character, isJumping: true },
         });
       }
 
       set(updates as GameState);
+    },
+
+    missGap() {
+      const state = get();
+      if (state.status !== "PLAYING") return;
+      if (state.character.isJumping) return; // player cleared the gap
+
+      const newRhythm = rebuildRhythm(state.rhythm).lose();
+      set({
+        lastRating: "MISS",
+        rhythm: toRhythmState(newRhythm),
+        status: newRhythm.isDead ? ("GAME_OVER" as GameStatus) : ("PLAYING" as GameStatus),
+      });
     },
 
     gainRhythm() {
