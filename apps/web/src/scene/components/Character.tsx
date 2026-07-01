@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { Mesh } from "three";
+import { Group } from "three";
 import { useGameStore } from "../../store/useGameStore";
 import { gameStore } from "../../store/useGameStore";
 import { PLATFORM_SPACING } from "../../engine/PlatformGenerator";
@@ -9,8 +9,11 @@ import { characterVisualX } from "../characterVisualX";
 const JUMP_HEIGHT = 2.5;
 const JUMP_DURATION = 0.35; // seconds
 
+const BODY_COLOR = "#f0c040";
+const AFRO_COLOR = "#e040fb";
+
 export function Character() {
-  const meshRef = useRef<Mesh>(null);
+  const meshRef = useRef<Group>(null);
   const jumpStartRef = useRef<number | null>(null);
   const prevStatusRef = useRef<string>("IDLE");
 
@@ -62,9 +65,44 @@ export function Character() {
   });
 
   return (
-    <mesh ref={meshRef} position={[0, 0.5, 0]}>
-      <boxGeometry args={[0.7, 0.7, 0.7]} />
-      <meshStandardMaterial color="#f0c040" emissive="#f0c040" emissiveIntensity={0.3} />
-    </mesh>
+    <group ref={meshRef} position={[0, 0.5, 0]}>
+      {/* legs */}
+      <mesh position={[-0.13, -0.32, 0]}>
+        <boxGeometry args={[0.16, 0.22, 0.2]} />
+        <meshStandardMaterial color={BODY_COLOR} emissive={BODY_COLOR} emissiveIntensity={0.2} />
+      </mesh>
+      <mesh position={[0.13, -0.32, 0]}>
+        <boxGeometry args={[0.16, 0.22, 0.2]} />
+        <meshStandardMaterial color={BODY_COLOR} emissive={BODY_COLOR} emissiveIntensity={0.2} />
+      </mesh>
+
+      {/* torso */}
+      <mesh position={[0, 0.02, 0]}>
+        <boxGeometry args={[0.5, 0.42, 0.3]} />
+        <meshStandardMaterial color={BODY_COLOR} emissive={BODY_COLOR} emissiveIntensity={0.3} />
+      </mesh>
+
+      {/* arms */}
+      <mesh position={[-0.32, 0.05, 0]}>
+        <boxGeometry args={[0.14, 0.32, 0.16]} />
+        <meshStandardMaterial color={BODY_COLOR} emissive={BODY_COLOR} emissiveIntensity={0.25} />
+      </mesh>
+      <mesh position={[0.32, 0.05, 0]}>
+        <boxGeometry args={[0.14, 0.32, 0.16]} />
+        <meshStandardMaterial color={BODY_COLOR} emissive={BODY_COLOR} emissiveIntensity={0.25} />
+      </mesh>
+
+      {/* head */}
+      <mesh position={[0, 0.36, 0]}>
+        <sphereGeometry args={[0.2, 16, 16]} />
+        <meshStandardMaterial color={BODY_COLOR} emissive={BODY_COLOR} emissiveIntensity={0.3} />
+      </mesh>
+
+      {/* afro — funk signature */}
+      <mesh position={[0, 0.56, 0]}>
+        <sphereGeometry args={[0.26, 16, 16]} />
+        <meshStandardMaterial color={AFRO_COLOR} emissive={AFRO_COLOR} emissiveIntensity={0.5} />
+      </mesh>
+    </group>
   );
 }
