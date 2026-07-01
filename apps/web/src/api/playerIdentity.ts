@@ -11,7 +11,14 @@ export function getOrCreatePlayerId(): string {
 }
 
 export function getDisplayName(): string {
-  return localStorage.getItem(DISPLAY_NAME_KEY) ?? "Funker";
+  const stored = localStorage.getItem(DISPLAY_NAME_KEY);
+  if (stored) return stored;
+
+  // Distinct default per player so first-time users don't all show as "Funker"
+  const suffix = getOrCreatePlayerId().slice(0, 4).toUpperCase();
+  const name = `Funker-${suffix}`;
+  localStorage.setItem(DISPLAY_NAME_KEY, name);
+  return name;
 }
 
 export function setDisplayName(name: string): void {

@@ -1,14 +1,35 @@
+import { useState } from "react";
+import { getDisplayName, setDisplayName } from "../api/playerIdentity";
+
 interface Props {
   onStart: () => void;
 }
 
 export function StartScreen({ onStart }: Props) {
+  const [name, setName] = useState(() => getDisplayName());
+
+  const handleNameChange = (value: string) => {
+    const trimmed = value.slice(0, 16);
+    setName(trimmed);
+    if (trimmed.trim().length > 0) setDisplayName(trimmed);
+  };
+
   return (
     <div style={styles.overlay}>
       <div style={styles.card}>
         <h1 style={styles.title}>FUNK IT UP</h1>
         <p style={styles.sub}>A rhythmic platformer</p>
         <p style={styles.hint}>Jump on the beat · Keep the groove alive</p>
+        <label style={styles.nameLabel}>
+          PLAYER NAME
+          <input
+            style={styles.nameInput}
+            value={name}
+            maxLength={16}
+            onChange={(e) => handleNameChange(e.target.value)}
+            onClick={(e) => e.currentTarget.select()}
+          />
+        </label>
         <button style={styles.btn} onClick={onStart}>
           PRESS TO PLAY
         </button>
@@ -57,6 +78,28 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: 13,
     color: "#9060c0",
     letterSpacing: 1,
+  },
+  nameLabel: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 6,
+    fontSize: 11,
+    color: "#9060c0",
+    letterSpacing: 2,
+    marginTop: 8,
+    width: "100%",
+  },
+  nameInput: {
+    fontFamily: "monospace",
+    fontSize: 16,
+    letterSpacing: 1,
+    padding: "10px 12px",
+    background: "#2a0a50",
+    border: "2px solid #6030a0",
+    borderRadius: 6,
+    color: "#f0e060",
+    outline: "none",
+    textAlign: "center",
   },
   btn: {
     marginTop: 16,
