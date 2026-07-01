@@ -15,9 +15,11 @@ interface LeaderboardData {
 
 interface Props {
   trackId: string;
+  limit?: number;
+  showTitle?: boolean;
 }
 
-export function Leaderboard({ trackId }: Props) {
+export function Leaderboard({ trackId, limit = 5, showTitle = true }: Props) {
   const { data, loading } = useQuery<LeaderboardData>(LEADERBOARD_QUERY, {
     variables: { trackId },
   });
@@ -40,9 +42,9 @@ export function Leaderboard({ trackId }: Props) {
 
   return (
     <div style={styles.wrapper}>
-      <span style={styles.title}>LEADERBOARD</span>
+      {showTitle && <span style={styles.title}>LEADERBOARD</span>}
       <ol style={styles.list}>
-        {entries.slice(0, 5).map((e) => (
+        {entries.slice(0, limit).map((e) => (
           <li
             key={e.player.id}
             style={{
