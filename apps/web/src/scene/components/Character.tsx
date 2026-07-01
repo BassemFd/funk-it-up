@@ -4,6 +4,7 @@ import { Mesh } from "three";
 import { useGameStore } from "../../store/useGameStore";
 import { gameStore } from "../../store/useGameStore";
 import { PLATFORM_SPACING } from "../../engine/PlatformGenerator";
+import { characterVisualX } from "../characterVisualX";
 
 const JUMP_HEIGHT = 2.5;
 const JUMP_DURATION = 0.35; // seconds
@@ -11,33 +12,43 @@ const JUMP_DURATION = 0.35; // seconds
 export function Character() {
   const meshRef = useRef<Mesh>(null);
   const jumpStartRef = useRef<number | null>(null);
-  const smoothXRef = useRef(0);
-  const characterX = useGameStore((s) => s.character.x);
-  const isJumping = useGameStore((s) => s.character.isJumping);
+  const prevStatusRef = useRef<string>("IDLE");
 
-  useFrame(({ clock }) => {
+  const isJumping = useGameStore((s) => s.character.isJumping);
+  const bpm = useGameStore((s) => s.bpm) ?? 98;
+  const status = useGameStore((s) => s.status);
+
+  // units per second: one platform per beat interval
+  const speedRef = useRef(0);
+  speedRef.current = PLATFORM_SPACING / ((60 / bpm) * 1000) * 1000;
+
+  useFrame(({ clock }, delta) => {
     if (!meshRef.current) return;
 
-    // Snap on game restart (characterX resets to 0 while smoothX is far ahead)
-    if (characterX < smoothXRef.current - PLATFORM_SPACING * 2) {
-      smoothXRef.current = characterX;
+    // Reset visual position on game start
+    if (prevStatusRef.current !== "PLAYING" && status === "PLAYING") {
+      characterVisualX.current = 0;
     }
-    smoothXRef.current += (characterX - smoothXRef.current) * 0.12;
-    meshRef.current.position.x = smoothXRef.current;
+    prevStatusRef.current = status;
+
+    // Continuous forward movement
+    if (status === "PLAYING") {
+      characterVisualX.current += speedRef.current * delta;
+    }
+
+    meshRef.current.position.x = characterVisualX.current;
 
     // Jump arc
     if (isJumping) {
       if (jumpStartRef.current === null) {
         jumpStartRef.current = clock.elapsedTime;
       }
-
       const t = (clock.elapsedTime - jumpStartRef.current) / JUMP_DURATION;
       if (t >= 1) {
         meshRef.current.position.y = 0.5;
         jumpStartRef.current = null;
         gameStore.getState().landCharacter();
       } else {
-        // Parabolic arc: sin(π * t) gives smooth up-down
         meshRef.current.position.y = 0.5 + Math.sin(Math.PI * t) * JUMP_HEIGHT;
       }
     } else {
@@ -45,7 +56,7 @@ export function Character() {
       meshRef.current.position.y = 0.5;
     }
 
-    // Squash & stretch for funk feel
+    // Squash & stretch
     const squash = isJumping ? 1.2 : 1;
     meshRef.current.scale.set(1 / squash, squash, 1);
   });

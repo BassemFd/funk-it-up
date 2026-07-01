@@ -52,12 +52,22 @@ export function buildResolvers(
         sessionRes.gainRhythm(args),
       finishSession: (_: unknown, args: { sessionId: string; atMs: number }) =>
         sessionRes.finishSession(args),
+      submitScore: (
+        _: unknown,
+        args: {
+          playerId: string;
+          displayName: string;
+          trackId: string;
+          points: number;
+          maxCombo: number;
+        },
+      ) => leaderboardRes.submitScore(args),
     },
 
     Subscription: {
       leaderboardUpdated: {
         subscribe: (_: unknown, { trackId }: { trackId: string }) =>
-          pubsub.asyncIterableIterator(LEADERBOARD_UPDATED(trackId)),
+          pubsub.asyncIterator(LEADERBOARD_UPDATED(trackId)),
         resolve: (payload: { leaderboardUpdated: unknown }) =>
           payload.leaderboardUpdated,
       },

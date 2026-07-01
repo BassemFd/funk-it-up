@@ -2,10 +2,11 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "web",
+      "name": "funk-it-up",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["--filter", "@funk-it-up/web", "dev", "--port", "5173"],
-      "port": 5173
+      "runtimeArgs": ["--filter", "@funk-it-up/web", "dev"],
+      "port": 5173,
+      "autoPort": true
     }
   ]
 }

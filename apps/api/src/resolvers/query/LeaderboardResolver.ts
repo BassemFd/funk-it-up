@@ -1,4 +1,4 @@
-import { PlayerId } from "@funk-it-up/domain";
+import { LeaderboardEntry, PlayerId } from "@funk-it-up/domain";
 import { ILeaderboardRepository } from "../../repositories/ILeaderboardRepository";
 
 interface LeaderboardEntryDTO {
@@ -42,5 +42,38 @@ export class LeaderboardResolver {
   }): Promise<number | null> {
     const board = await this.leaderboardRepo.getByTrackId(args.trackId);
     return board.rankOf(PlayerId.of(args.playerId));
+  }
+
+  async submitScore(args: {
+    playerId: string;
+    displayName: string;
+    trackId: string;
+    points: number;
+    maxCombo: number;
+  }): Promise<LeaderboardEntryDTO> {
+    const entry = LeaderboardEntry.create({
+      playerId: PlayerId.of(args.playerId),
+      displayName: args.displayName,
+      points: args.points,
+      maxCombo: args.maxCombo,
+      trackId: args.trackId,
+    });
+
+    const board = await this.leaderboardRepo.submit(entry);
+    const saved = board.entries.find((e) => e.playerId.equals(entry.playerId));
+    if (!saved) throw new Error("Failed to submit score");
+
+    return {
+      rank: saved.rank,
+      player: {
+        id: saved.playerId.value,
+        displayName: saved.displayName,
+        spotifyId: null,
+        totalScore: 0,
+      },
+      points: saved.points,
+      maxCombo: saved.maxCombo,
+      trackId: saved.trackId,
+    };
   }
 }

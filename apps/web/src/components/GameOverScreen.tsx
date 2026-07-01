@@ -1,8 +1,36 @@
+import { useEffect, useRef } from "react";
+import { useMutation } from "@apollo/client/react";
 import { useGameStore } from "../store/useGameStore";
 import { gameStore } from "../store/useGameStore";
+import { SUBMIT_SCORE, LEADERBOARD_QUERY } from "../api/queries";
+import { getOrCreatePlayerId, getDisplayName } from "../api/playerIdentity";
+import { Leaderboard } from "./Leaderboard";
 
 export function GameOverScreen() {
   const score = useGameStore((s) => s.score);
+  const trackId = useGameStore((s) => s.trackId);
+  const [submitScore] = useMutation(SUBMIT_SCORE);
+  const submittedRef = useRef(false);
+
+  useEffect(() => {
+    if (submittedRef.current || !trackId) return;
+    submittedRef.current = true;
+
+    // Explicit refetch: the leaderboard subscription's WebSocket handshake is
+    // slower than this HTTP mutation, so it can miss the publish event fired
+    // from the mutation resolver. Refetching the query guarantees the UI
+    // reflects the just-submitted score even if the subscription missed it.
+    submitScore({
+      variables: {
+        playerId: getOrCreatePlayerId(),
+        displayName: getDisplayName(),
+        trackId,
+        points: score.points,
+        maxCombo: score.maxCombo,
+      },
+      refetchQueries: [{ query: LEADERBOARD_QUERY, variables: { trackId } }],
+    }).catch((err) => console.warn("Failed to submit score:", err));
+  }, [submitScore, trackId, score.points, score.maxCombo]);
 
   return (
     <div style={styles.overlay}>
@@ -14,6 +42,7 @@ export function GameOverScreen() {
           <span style={styles.label}>MAX COMBO</span>
           <span style={styles.combo}>{score.maxCombo}</span>
         </div>
+        {trackId && <Leaderboard trackId={trackId} />}
         <button
           style={styles.btn}
           onClick={() => gameStore.getState().reset()}

@@ -106,6 +106,15 @@ export const typeDefs = `#graphql
 
     # Termine la session normalement (fin de track)
     finishSession(sessionId: ID!, atMs: Int!): GameSession!
+
+    # Soumet un score final au leaderboard (flux simplifié, sans session serveur)
+    submitScore(
+      playerId: ID!
+      displayName: String!
+      trackId: String!
+      points: Int!
+      maxCombo: Int!
+    ): LeaderboardEntry!
   }
 
   # ── Subscriptions ─────────────────────────────────────────────────────────
