@@ -75,6 +75,12 @@ export const typeDefs = `#graphql
     session: GameSession!
   }
 
+  type AuthPayload {
+    playerId: ID!
+    displayName: String!
+    token: String!
+  }
+
   # ── Queries ───────────────────────────────────────────────────────────────
   type Query {
     # Leaderboard global pour une track
@@ -107,14 +113,20 @@ export const typeDefs = `#graphql
     # Termine la session normalement (fin de track)
     finishSession(sessionId: ID!, atMs: Int!): GameSession!
 
-    # Soumet un score final au leaderboard (flux simplifié, sans session serveur)
+    # Soumet un score final au leaderboard — l'identité vient du token, jamais
+    # d'un playerId/displayName fourni par le client
     submitScore(
-      playerId: ID!
-      displayName: String!
+      token: String!
       trackId: String!
       points: Int!
       maxCombo: Int!
     ): LeaderboardEntry!
+
+    # Crée un compte joueur avec un nom unique (rejeté si déjà pris)
+    registerPlayer(displayName: String!, password: String!): AuthPayload!
+
+    # Récupère l'accès à un compte existant
+    loginPlayer(displayName: String!, password: String!): AuthPayload!
   }
 
   # ── Subscriptions ─────────────────────────────────────────────────────────

@@ -2,15 +2,13 @@ import { gql } from "@apollo/client";
 
 export const SUBMIT_SCORE = gql`
   mutation SubmitScore(
-    $playerId: ID!
-    $displayName: String!
+    $token: String!
     $trackId: String!
     $points: Int!
     $maxCombo: Int!
   ) {
     submitScore(
-      playerId: $playerId
-      displayName: $displayName
+      token: $token
       trackId: $trackId
       points: $points
       maxCombo: $maxCombo
@@ -22,6 +20,26 @@ export const SUBMIT_SCORE = gql`
         id
         displayName
       }
+    }
+  }
+`;
+
+export const REGISTER_PLAYER = gql`
+  mutation RegisterPlayer($displayName: String!, $password: String!) {
+    registerPlayer(displayName: $displayName, password: $password) {
+      playerId
+      displayName
+      token
+    }
+  }
+`;
+
+export const LOGIN_PLAYER = gql`
+  mutation LoginPlayer($displayName: String!, $password: String!) {
+    loginPlayer(displayName: $displayName, password: $password) {
+      playerId
+      displayName
+      token
     }
   }
 `;

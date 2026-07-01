@@ -16,6 +16,9 @@ import { InMemoryGameSessionRepository } from "./repositories/InMemoryGameSessio
 import { InMemoryLeaderboardRepository } from "./repositories/InMemoryLeaderboardRepository.js";
 import { RedisLeaderboardRepository } from "./repositories/RedisLeaderboardRepository.js";
 import type { ILeaderboardRepository } from "./repositories/ILeaderboardRepository.js";
+import { InMemoryAccountRepository } from "./repositories/InMemoryAccountRepository.js";
+import { RedisAccountRepository } from "./repositories/RedisAccountRepository.js";
+import type { IAccountRepository } from "./repositories/IAccountRepository.js";
 
 const PORT = parseInt(process.env.PORT ?? "4000", 10);
 const REDIS_URL = process.env.REDIS_URL ?? "redis://localhost:6379";
@@ -28,20 +31,23 @@ async function main() {
   const sessionRepo = new InMemoryGameSessionRepository();
 
   let leaderboardRepo: ILeaderboardRepository;
+  let accountRepo: IAccountRepository;
   let redis: Redis | null = null;
 
   try {
     redis = new Redis(REDIS_URL, { lazyConnect: true, connectTimeout: 3000 });
     await redis.connect();
     leaderboardRepo = new RedisLeaderboardRepository(redis, pubsub);
-    console.log("📦  Redis leaderboard connected →", REDIS_URL);
+    accountRepo = new RedisAccountRepository(redis);
+    console.log("📦  Redis leaderboard + accounts connected →", REDIS_URL);
   } catch {
-    console.warn("⚠️   Redis unavailable — falling back to in-memory leaderboard");
+    console.warn("⚠️   Redis unavailable — falling back to in-memory repositories");
     leaderboardRepo = new InMemoryLeaderboardRepository(pubsub);
+    accountRepo = new InMemoryAccountRepository();
   }
 
   // ── Schema ──────────────────────────────────────────────────────────────────
-  const resolvers = buildResolvers(playerRepo, sessionRepo, leaderboardRepo, pubsub);
+  const resolvers = buildResolvers(playerRepo, sessionRepo, leaderboardRepo, accountRepo, pubsub);
   const schema = makeExecutableSchema({ typeDefs, resolvers });
 
   // ── HTTP + WS servers ───────────────────────────────────────────────────────

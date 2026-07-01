@@ -32,6 +32,7 @@ export interface GameState {
   character: CharacterState;
   lastRating: BeatRating | null;
   theOneBeats: Set<number>;
+  lastScoredBeat: number | null;
 
   startGame: (opts: { bpm: number; trackId: string }) => void;
   registerJump: (rating: BeatRating, beatNumber?: number) => void;
@@ -73,6 +74,7 @@ export function createGameStore() {
     character: { x: 0, isJumping: false },
     lastRating: null,
     theOneBeats: new Set(),
+    lastScoredBeat: null,
 
     startGame({ bpm, trackId }) {
       const generator = PlatformGenerator.create({ bpm, seed: trackId });
@@ -91,6 +93,7 @@ export function createGameStore() {
         character: { x: 0, isJumping: false },
         lastRating: null,
         theOneBeats,
+        lastScoredBeat: null,
       });
     },
 
@@ -105,7 +108,14 @@ export function createGameStore() {
         character: { ...state.character, isJumping: true },
       };
 
-      if (rating !== "MISS") {
+      // A beat can only be scored once — without this, mashing the jump key
+      // faster than the beat interval (but slower than the jump animation)
+      // could land multiple PERFECT/GOOD ratings against the same beat and
+      // inflate score/combo indefinitely.
+      const alreadyScoredThisBeat =
+        beatNumber !== undefined && beatNumber === state.lastScoredBeat;
+
+      if (rating !== "MISS" && !alreadyScoredThisBeat) {
         const currentScore = rebuildScore(state.score);
         let newRhythm = rebuildRhythm(state.rhythm);
         if (beatNumber !== undefined && state.theOneBeats.has(beatNumber)) {
@@ -114,6 +124,7 @@ export function createGameStore() {
         Object.assign(updates, {
           score: toScoreState(currentScore.add(rating)),
           rhythm: toRhythmState(newRhythm),
+          lastScoredBeat: beatNumber ?? state.lastScoredBeat,
         });
       }
 
@@ -165,6 +176,7 @@ export function createGameStore() {
         character: { x: 0, isJumping: false },
         lastRating: null,
         theOneBeats: new Set(),
+        lastScoredBeat: null,
       });
     },
   }));

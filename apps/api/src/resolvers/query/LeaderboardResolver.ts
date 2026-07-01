@@ -1,5 +1,7 @@
+import { GraphQLError } from "graphql";
 import { LeaderboardEntry, PlayerId } from "@funk-it-up/domain";
 import { ILeaderboardRepository } from "../../repositories/ILeaderboardRepository";
+import { IAccountRepository } from "../../repositories/IAccountRepository.js";
 
 interface LeaderboardEntryDTO {
   rank: number;
@@ -15,7 +17,10 @@ interface LeaderboardDTO {
 }
 
 export class LeaderboardResolver {
-  constructor(private readonly leaderboardRepo: ILeaderboardRepository) {}
+  constructor(
+    private readonly leaderboardRepo: ILeaderboardRepository,
+    private readonly accountRepo: IAccountRepository,
+  ) {}
 
   async leaderboard(args: { trackId: string }): Promise<LeaderboardDTO> {
     const board = await this.leaderboardRepo.getByTrackId(args.trackId);
@@ -45,15 +50,24 @@ export class LeaderboardResolver {
   }
 
   async submitScore(args: {
-    playerId: string;
-    displayName: string;
+    token: string;
     trackId: string;
     points: number;
     maxCombo: number;
   }): Promise<LeaderboardEntryDTO> {
+    // Identity comes from the server-verified token, never from client-supplied
+    // playerId/displayName — otherwise anyone could submit scores under someone
+    // else's name.
+    const account = await this.accountRepo.resolveToken(args.token);
+    if (!account) {
+      throw new GraphQLError("Invalid or expired session — please log in again", {
+        extensions: { code: "UNAUTHENTICATED" },
+      });
+    }
+
     const entry = LeaderboardEntry.create({
-      playerId: PlayerId.of(args.playerId),
-      displayName: args.displayName,
+      playerId: PlayerId.of(account.playerId),
+      displayName: account.displayName,
       points: args.points,
       maxCombo: args.maxCombo,
       trackId: args.trackId,

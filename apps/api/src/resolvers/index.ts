@@ -2,10 +2,12 @@ import { GraphQLScalarType, Kind } from "graphql";
 import { PubSub } from "graphql-subscriptions";
 import { GameSessionResolver } from "./mutation/GameSessionResolver.js";
 import { PlayerResolver } from "./mutation/PlayerResolver.js";
+import { AccountResolver } from "./mutation/AccountResolver.js";
 import { LeaderboardResolver } from "./query/LeaderboardResolver.js";
 import { IPlayerRepository } from "../repositories/IPlayerRepository.js";
 import { IGameSessionRepository } from "../repositories/IGameSessionRepository.js";
 import { ILeaderboardRepository } from "../repositories/ILeaderboardRepository.js";
+import { IAccountRepository } from "../repositories/IAccountRepository.js";
 import { LEADERBOARD_UPDATED } from "../pubsub.js";
 
 const DateTimeScalar = new GraphQLScalarType({
@@ -19,11 +21,13 @@ export function buildResolvers(
   playerRepo: IPlayerRepository,
   sessionRepo: IGameSessionRepository,
   leaderboardRepo: ILeaderboardRepository,
+  accountRepo: IAccountRepository,
   pubsub: PubSub,
 ) {
   const playerRes = new PlayerResolver(playerRepo);
   const sessionRes = new GameSessionResolver(sessionRepo, playerRepo, leaderboardRepo);
-  const leaderboardRes = new LeaderboardResolver(leaderboardRepo);
+  const leaderboardRes = new LeaderboardResolver(leaderboardRepo, accountRepo);
+  const accountRes = new AccountResolver(accountRepo);
 
   return {
     DateTime: DateTimeScalar,
@@ -54,14 +58,16 @@ export function buildResolvers(
         sessionRes.finishSession(args),
       submitScore: (
         _: unknown,
-        args: {
-          playerId: string;
-          displayName: string;
-          trackId: string;
-          points: number;
-          maxCombo: number;
-        },
+        args: { token: string; trackId: string; points: number; maxCombo: number },
       ) => leaderboardRes.submitScore(args),
+      registerPlayer: (
+        _: unknown,
+        args: { displayName: string; password: string },
+      ) => accountRes.registerPlayer(args),
+      loginPlayer: (
+        _: unknown,
+        args: { displayName: string; password: string },
+      ) => accountRes.loginPlayer(args),
     },
 
     Subscription: {

@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client/react";
 import { useGameStore } from "../store/useGameStore";
 import { gameStore } from "../store/useGameStore";
 import { SUBMIT_SCORE, LEADERBOARD_QUERY } from "../api/queries";
-import { getOrCreatePlayerId, getDisplayName } from "../api/playerIdentity";
+import { getStoredAuth } from "../api/auth";
 import { Leaderboard } from "./Leaderboard";
 
 export function GameOverScreen() {
@@ -14,6 +14,9 @@ export function GameOverScreen() {
 
   useEffect(() => {
     if (submittedRef.current || !trackId) return;
+    const auth = getStoredAuth();
+    if (!auth) return; // not signed in — nothing to submit under
+
     submittedRef.current = true;
 
     // Explicit refetch: the leaderboard subscription's WebSocket handshake is
@@ -22,8 +25,7 @@ export function GameOverScreen() {
     // reflects the just-submitted score even if the subscription missed it.
     submitScore({
       variables: {
-        playerId: getOrCreatePlayerId(),
-        displayName: getDisplayName(),
+        token: auth.token,
         trackId,
         points: score.points,
         maxCombo: score.maxCombo,

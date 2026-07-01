@@ -1,6 +1,6 @@
 import { useQuery, useSubscription } from "@apollo/client/react";
 import { LEADERBOARD_QUERY, LEADERBOARD_SUBSCRIPTION } from "../api/queries";
-import { getOrCreatePlayerId } from "../api/playerIdentity";
+import { getStoredAuth } from "../api/auth";
 
 interface Entry {
   rank: number;
@@ -28,7 +28,7 @@ export function Leaderboard({ trackId }: Props) {
   );
 
   const entries = liveData?.leaderboard.entries ?? data?.leaderboard.entries ?? [];
-  const myId = getOrCreatePlayerId();
+  const myId = getStoredAuth()?.playerId;
 
   if (loading && entries.length === 0) {
     return <p style={styles.hint}>Loading leaderboard…</p>;
