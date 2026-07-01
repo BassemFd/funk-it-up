@@ -9,8 +9,10 @@ import { characterVisualX } from "../characterVisualX";
 const JUMP_HEIGHT = 2.5;
 const JUMP_DURATION = 0.35; // seconds
 
-const BODY_COLOR = "#f0c040";
-const AFRO_COLOR = "#e040fb";
+const SKIN_COLOR = "#c88850";
+const SUIT_COLOR = "#30d8c0";
+const AFRO_COLOR = "#2a1810";
+const SPARKLE_COLOR = "#fff060";
 
 export function Character() {
   const meshRef = useRef<Group>(null);
@@ -66,42 +68,54 @@ export function Character() {
 
   return (
     <group ref={meshRef} position={[0, 0.5, 0]}>
-      {/* legs */}
-      <mesh position={[-0.13, -0.32, 0]}>
-        <boxGeometry args={[0.16, 0.22, 0.2]} />
-        <meshStandardMaterial color={BODY_COLOR} emissive={BODY_COLOR} emissiveIntensity={0.2} />
+      {/* bell-bottom legs */}
+      <mesh position={[-0.13, -0.34, 0]}>
+        <boxGeometry args={[0.2, 0.2, 0.22]} />
+        <meshStandardMaterial color={SUIT_COLOR} emissive={SUIT_COLOR} emissiveIntensity={0.2} />
       </mesh>
-      <mesh position={[0.13, -0.32, 0]}>
-        <boxGeometry args={[0.16, 0.22, 0.2]} />
-        <meshStandardMaterial color={BODY_COLOR} emissive={BODY_COLOR} emissiveIntensity={0.2} />
+      <mesh position={[0.13, -0.34, 0]}>
+        <boxGeometry args={[0.2, 0.2, 0.22]} />
+        <meshStandardMaterial color={SUIT_COLOR} emissive={SUIT_COLOR} emissiveIntensity={0.2} />
       </mesh>
 
-      {/* torso */}
+      {/* jumpsuit torso */}
       <mesh position={[0, 0.02, 0]}>
         <boxGeometry args={[0.5, 0.42, 0.3]} />
-        <meshStandardMaterial color={BODY_COLOR} emissive={BODY_COLOR} emissiveIntensity={0.3} />
+        <meshStandardMaterial color={SUIT_COLOR} emissive={SUIT_COLOR} emissiveIntensity={0.3} />
+      </mesh>
+
+      {/* rhinestone medallion */}
+      <mesh position={[0, 0.08, 0.16]}>
+        <sphereGeometry args={[0.05, 8, 8]} />
+        <meshStandardMaterial color={SPARKLE_COLOR} emissive={SPARKLE_COLOR} emissiveIntensity={1} />
       </mesh>
 
       {/* arms */}
       <mesh position={[-0.32, 0.05, 0]}>
         <boxGeometry args={[0.14, 0.32, 0.16]} />
-        <meshStandardMaterial color={BODY_COLOR} emissive={BODY_COLOR} emissiveIntensity={0.25} />
+        <meshStandardMaterial color={SUIT_COLOR} emissive={SUIT_COLOR} emissiveIntensity={0.25} />
       </mesh>
       <mesh position={[0.32, 0.05, 0]}>
         <boxGeometry args={[0.14, 0.32, 0.16]} />
-        <meshStandardMaterial color={BODY_COLOR} emissive={BODY_COLOR} emissiveIntensity={0.25} />
+        <meshStandardMaterial color={SUIT_COLOR} emissive={SUIT_COLOR} emissiveIntensity={0.25} />
       </mesh>
 
-      {/* head */}
+      {/* head (skin) */}
       <mesh position={[0, 0.36, 0]}>
         <sphereGeometry args={[0.2, 16, 16]} />
-        <meshStandardMaterial color={BODY_COLOR} emissive={BODY_COLOR} emissiveIntensity={0.3} />
+        <meshStandardMaterial color={SKIN_COLOR} emissive={SKIN_COLOR} emissiveIntensity={0.15} />
       </mesh>
 
-      {/* afro — funk signature */}
-      <mesh position={[0, 0.56, 0]}>
-        <sphereGeometry args={[0.26, 16, 16]} />
-        <meshStandardMaterial color={AFRO_COLOR} emissive={AFRO_COLOR} emissiveIntensity={0.5} />
+      {/* shades */}
+      <mesh position={[0, 0.38, 0.18]}>
+        <boxGeometry args={[0.32, 0.06, 0.05]} />
+        <meshStandardMaterial color="#0a0a0a" emissive="#0a0a0a" emissiveIntensity={0.6} />
+      </mesh>
+
+      {/* big funk afro */}
+      <mesh position={[0, 0.62, 0]}>
+        <sphereGeometry args={[0.32, 16, 16]} />
+        <meshStandardMaterial color={AFRO_COLOR} roughness={1} />
       </mesh>
     </group>
   );
