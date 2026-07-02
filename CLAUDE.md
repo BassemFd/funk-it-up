@@ -234,7 +234,23 @@ someone places the files back:
   app at runtime, safe to skip if you just need the game working
 
 BPM per track needs to be supplied manually (no API for this anymore — see
-above). Ask whoever has the files, or estimate it by ear/tooling.
+above). Measured with `aubio tempo <file>.mp3` (`brew install aubio`) —
+automated estimate, not ear-verified:
+
+| Track | BPM (measured) |
+|---|---|
+| 01-sweet-addiction | 113.42 — **wired in**, `App.tsx`'s `DEFAULT_BPM` |
+| 02-feeling-something | 100.74 |
+| 03-say-yeah | 122.84 |
+| 04-sleepless-night | 158.85 — possible octave error (half/double the real tempo), unverified, sanity-check by ear before using |
+| 05-unstoppable | 127.40 |
+| 06-surrender | 106.88 |
+| 07-light-up | 127.87 |
+| 08-the-game | 96.30 |
+
+Only track 01 is actually wired up (single `DEFAULT_TRACK`, no track-
+selection UI). Don't re-run `aubio` on these unless the files changed —
+the numbers are already here.
 
 ## Verifying changes
 
