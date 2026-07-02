@@ -186,13 +186,55 @@ score validation/anti-cheat) if this comes up again.
 ## Known-empty / not started
 
 - `packages/ui` — Storybook design system, mentioned early on, never begun.
-- Spotify Web Playback SDK — game currently uses a hardcoded BPM (98) and
-  fake track ID (`jeroboam-funk-01`), not real playback.
 - Prisma/PostgreSQL — Player/GameSession persistence is Redis + in-memory
   only; a durable relational store was floated but Redis ended up covering
   everything actually needed (accounts + leaderboard) so it never happened.
 - PWA icons/manifest polish.
 - No CI pipeline configured.
+
+## Real audio — not Spotify (deliberately ruled out)
+
+Spotify integration was seriously considered and explicitly rejected: the
+Web Playback SDK requires every listener to have full Spotify Premium (not
+Lite/Mini), and since Feb 2026 a new Development Mode app is capped at 5
+authorized users total with no clear path out for a portfolio project —
+plus the `audio-features` endpoint (the only way to get a track's real BPM
+from Spotify) has been fully deprecated for new apps since Nov 2024, no
+waitlist, no exceptions. None of that is viable for something meant to be
+played by anyone visiting a public portfolio. Don't redo this research
+without a strong reason to believe those constraints changed.
+
+Instead, the game plays real tracks from Jéroboam's actual album ("Favorite",
+Favorite Recordings) via the Web Audio API directly (`AudioContext` +
+`AudioBufferSourceNode`, not an `<audio>` element) — no streaming API, no
+OAuth, no premium requirement for anyone.
+
+**`apps/web/src/audio/MusicPlayer.ts` is the game's authoritative clock.**
+`BeatLoop.tsx` used to drive `BeatEngine` off Three.js's render clock
+(`useFrame`'s `clock.elapsedTime`), which is tied to `requestAnimationFrame`
+and can jitter. Now it reads `musicPlayer.getElapsedMs()` every frame instead
+— `AudioContext.currentTime` is a hardware audio clock, so the beat grid
+can never drift from what's actually audible. `musicPlayer.play()` must be
+called synchronously from a user-gesture handler (autoplay policy) — it's
+called from `App.tsx`'s `startGame`, not reactively from inside the Canvas.
+`window.__musicPlayer` is exposed in dev builds, same pattern as
+`window.__gameStore`.
+
+**These audio files are gitignored on purpose (`apps/web/public/audio/` and
+`press-kit/` in `.gitignore`) — do not remove that ignore rule.** They're the
+album's actual commercial masters plus a real press kit (cover art, press
+release, a 288MB live-performance video), licensed for press/media coverage,
+not for redistribution via a public git repo — and the video alone is past
+GitHub's 100MB/file hard limit regardless. **On a fresh clone, both
+directories will be missing** and the game won't have audio to play until
+someone places the files back:
+- `apps/web/public/audio/01-sweet-addiction.mp3` through `08-the-game.mp3`
+  (exact filenames — the game will reference these directly)
+- `press-kit/jeroboam-favorite/` — reference material only, not read by the
+  app at runtime, safe to skip if you just need the game working
+
+BPM per track needs to be supplied manually (no API for this anymore — see
+above). Ask whoever has the files, or estimate it by ear/tooling.
 
 ## Verifying changes
 

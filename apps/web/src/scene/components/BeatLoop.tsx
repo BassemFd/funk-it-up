@@ -2,32 +2,31 @@ import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { BeatEngine } from "../../engine/BeatEngine";
 import { gameStore } from "../../store/useGameStore";
+import { musicPlayer } from "../../audio/MusicPlayer";
 
 interface Props {
   engine: BeatEngine;
 }
 
 export function BeatLoop({ engine }: Props) {
-  const startTimeRef = useRef<number | null>(null);
   const prevStatusRef = useRef<string>("IDLE");
 
-  useFrame(({ clock }) => {
+  useFrame(() => {
     const { status } = gameStore.getState();
 
     if (prevStatusRef.current !== "PLAYING" && status === "PLAYING") {
-      startTimeRef.current = null;
       engine.reset();
+    }
+    if (prevStatusRef.current === "PLAYING" && status !== "PLAYING") {
+      musicPlayer.stop();
     }
     prevStatusRef.current = status;
 
     if (status !== "PLAYING") return;
 
-    if (startTimeRef.current === null) {
-      startTimeRef.current = clock.elapsedTime;
-    }
-
-    const elapsedMs = (clock.elapsedTime - startTimeRef.current) * 1000;
-    engine.tick(elapsedMs);
+    // musicPlayer.getElapsedMs() is the single source of truth for game
+    // time — see MusicPlayer.ts for why this replaced Three.js's clock.
+    engine.tick(musicPlayer.getElapsedMs());
   });
 
   return null;

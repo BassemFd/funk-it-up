@@ -6,6 +6,7 @@ import { getStoredAuth, setStoredAuth, clearStoredAuth } from "../api/auth";
 
 interface Props {
   onStart: () => void;
+  musicReady: boolean;
 }
 
 type AuthMode = "register" | "login";
@@ -31,7 +32,7 @@ function errorCode(err: unknown): string | undefined {
   return undefined;
 }
 
-export function StartScreen({ onStart }: Props) {
+export function StartScreen({ onStart, musicReady }: Props) {
   const [auth, setAuth] = useState(() => getStoredAuth());
   const [mode, setMode] = useState<AuthMode>("register");
   const [name, setName] = useState("");
@@ -97,8 +98,8 @@ export function StartScreen({ onStart }: Props) {
             <p style={styles.welcome}>
               Welcome back, <span style={styles.welcomeName}>{auth.displayName}</span>
             </p>
-            <button style={styles.btn} onClick={onStart}>
-              PRESS TO PLAY
+            <button style={styles.btn} onClick={onStart} disabled={!musicReady}>
+              {musicReady ? "PRESS TO PLAY" : "LOADING TRACK…"}
             </button>
             <button style={styles.switchLink} onClick={handleSwitchAccount}>
               Not you? Switch account

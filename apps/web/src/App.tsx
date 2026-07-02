@@ -8,18 +8,33 @@ import { CameraTiltControls } from "./components/CameraTiltControls";
 import { useGameStore, gameStore } from "./store/useGameStore";
 import { BeatEngine } from "./engine/BeatEngine";
 import { useBeatEngine } from "./hooks/useBeatEngine";
+import { musicPlayer } from "./audio/MusicPlayer";
 
+// TODO: placeholder BPM — real Jéroboam tracks are wired in (see
+// apps/web/public/audio/), but nobody has measured their actual BPM yet.
+// Platform spacing/beat timing will be wrong until this is the real value.
+// See CLAUDE.md "Real audio — not Spotify" section.
 const DEFAULT_BPM = 98;
 const DEFAULT_TRACK = "jeroboam-funk-01";
+const TRACK_URL = "/audio/01-sweet-addiction.mp3";
 
 export function App() {
   const status = useGameStore((s) => s.status);
   const bpm = useGameStore((s) => s.bpm) ?? DEFAULT_BPM;
   const engine: BeatEngine = useBeatEngine(bpm);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
+  const [musicReady, setMusicReady] = useState(false);
+
+  useEffect(() => {
+    musicPlayer
+      .load(TRACK_URL)
+      .then(() => setMusicReady(true))
+      .catch((err) => console.error("Failed to load track:", err));
+  }, []);
 
   const startGame = useCallback(() => {
     engine.reset();
+    musicPlayer.play();
     gameStore.getState().startGame({
       bpm: DEFAULT_BPM,
       trackId: DEFAULT_TRACK,
@@ -62,7 +77,7 @@ export function App() {
       <GameScene engine={engine} bpm={bpm} trackId={DEFAULT_TRACK} />
 
       {status === "PLAYING" && <HUD />}
-      {status === "IDLE" && <StartScreen onStart={startGame} />}
+      {status === "IDLE" && <StartScreen onStart={startGame} musicReady={musicReady} />}
       {status === "GAME_OVER" && <GameOverScreen />}
 
       <button
