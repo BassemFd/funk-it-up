@@ -119,15 +119,17 @@ export function Character() {
 
     // Running gait — one full stride per beat, so the character literally
     // moves to the music. Hips/shoulders swing in counter-phase like a real
-    // walk cycle; knees bend only while that leg is passing under the body
-    // (approximated as a quarter-cycle phase shift off the hip swing), never
-    // hyperextending forward.
+    // walk cycle. Because of the 90°-Y-rotated body, a POSITIVE hip
+    // rotation.x actually swings the leg toward world -X (backward/stance),
+    // and negative swings it toward world +X (forward/recovery) — so the
+    // knee must only bend while its own hip angle is negative, i.e. while
+    // that leg is swinging forward, never while it's planted behind the body.
     if (status === "PLAYING") {
       const strideHz = bpm / 60;
       const phase = clock.elapsedTime * strideHz * Math.PI * 2;
       const swing = Math.sin(phase);
-      const kneeL = Math.max(0, Math.cos(phase)) * KNEE_BEND;
-      const kneeR = Math.max(0, -Math.cos(phase)) * KNEE_BEND;
+      const kneeL = Math.max(0, -swing) * KNEE_BEND;
+      const kneeR = Math.max(0, swing) * KNEE_BEND;
 
       if (hipLRef.current) hipLRef.current.rotation.x = swing * LEG_SWING;
       if (hipRRef.current) hipRRef.current.rotation.x = -swing * LEG_SWING;

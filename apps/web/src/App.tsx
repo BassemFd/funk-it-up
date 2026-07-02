@@ -4,6 +4,7 @@ import { HUD } from "./components/HUD";
 import { StartScreen } from "./components/StartScreen";
 import { GameOverScreen } from "./components/GameOverScreen";
 import { LeaderboardModal } from "./components/LeaderboardModal";
+import { CameraTiltControls } from "./components/CameraTiltControls";
 import { useGameStore, gameStore } from "./store/useGameStore";
 import { BeatEngine } from "./engine/BeatEngine";
 import { useBeatEngine } from "./hooks/useBeatEngine";
@@ -69,6 +70,8 @@ export function App() {
       >
         🏆 LEADERBOARD
       </button>
+
+      <CameraTiltControls />
 
       {showLeaderboard && (
         <LeaderboardModal trackId={DEFAULT_TRACK} onClose={() => setShowLeaderboard(false)} />

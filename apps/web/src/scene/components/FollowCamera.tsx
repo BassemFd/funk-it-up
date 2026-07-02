@@ -1,33 +1,38 @@
-import { useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { characterVisualX } from "../characterVisualX";
-import { gameStore } from "../../store/useGameStore";
+import { cameraOrbit, CAMERA_ORBIT_LIMITS } from "../cameraOrbit";
 
-// Pure side view, Mario-style: camera tracks directly beside the character
-// (no X lead/lag) and looks straight across the Z axis instead of diagonally
-// from behind, with camera/look-at heights close together for a flat,
-// horizontal angle instead of looking down.
-const CAMERA_OFFSET_X = 0;
-const CAMERA_Y = 1.7;
-const CAMERA_Z = 9;
+// Camera orbits the character on a fixed-radius "leash" — like it's tied to
+// the character with a cord. yaw/pitch come from cameraOrbit (mutated by the
+// on-screen tilt buttons); at yaw=0/pitch=0 this reduces to the original
+// pure Mario-style side view.
+const RADIUS = 9;
 const LOOK_AT_Y = 1.4;
 
 export function FollowCamera() {
   const { camera } = useThree();
 
-  useFrame(() => {
+  useFrame((_, delta) => {
     const vx = characterVisualX.current;
+    const { held } = cameraOrbit;
+    const { maxPitch, rotateSpeed } = CAMERA_ORBIT_LIMITS;
 
-    // The character moves at constant velocity along X with no sudden jumps
-    // (only Y jumps for the beat hops), so there's nothing to smooth here —
-    // lerping toward a continuously-moving target would just leave the
-    // camera permanently trailing behind it, off-centering the character.
-    // A direct 1:1 follow keeps it dead-center every frame.
-    camera.position.set(vx + CAMERA_OFFSET_X, CAMERA_Y, CAMERA_Z);
+    if (held.left) cameraOrbit.yaw -= rotateSpeed * delta;
+    if (held.right) cameraOrbit.yaw += rotateSpeed * delta;
+    if (held.up) cameraOrbit.pitch = Math.min(maxPitch, cameraOrbit.pitch + rotateSpeed * delta);
+    if (held.down) cameraOrbit.pitch = Math.max(-maxPitch, cameraOrbit.pitch - rotateSpeed * delta);
 
-    // Fixed rotation: always look at the same relative point ahead of the
-    // camera — a constant direction vector, pure translation, zero camera
-    // rotation drift.
+    const { yaw, pitch } = cameraOrbit;
+
+    // Spherical offset around the character — no lerp on any axis: the
+    // character moves at constant velocity (nothing to smooth) and the
+    // orbit angles only change while a tilt button is held, so a direct
+    // 1:1 follow keeps the character dead-center at all times.
+    camera.position.set(
+      vx + RADIUS * Math.sin(yaw) * Math.cos(pitch),
+      LOOK_AT_Y + RADIUS * Math.sin(pitch),
+      RADIUS * Math.cos(yaw) * Math.cos(pitch),
+    );
     camera.lookAt(vx, LOOK_AT_Y, 0);
   });
 
