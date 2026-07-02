@@ -5,3 +5,11 @@ coverage/
 *.env
 *.local
 .DS_Store
+
+# Licensed Jéroboam ("Favorite") album material — real commercial tracks +
+# press kit. Kept on disk for local dev/testing, never pushed to the public
+# repo (would blow past GitHub's 100MB/file limit on the video alone, and
+# republishing someone else's masters/press assets isn't something a press
+# kit license covers). See CLAUDE.md for how to restore these after a clone.
+apps/web/public/audio/
+press-kit/
