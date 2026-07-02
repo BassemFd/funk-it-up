@@ -3,10 +3,14 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { characterVisualX } from "../characterVisualX";
 import { gameStore } from "../../store/useGameStore";
 
-const CAMERA_OFFSET_X = -5;
-const CAMERA_Y = 2.4;
-const CAMERA_Z = 11;
-const LOOK_AT_Y = 1.1;
+// Pure side view, Mario-style: camera tracks directly beside the character
+// (no X lead/lag) and looks straight across the Z axis instead of diagonally
+// from behind, with camera/look-at heights close together for a flat,
+// horizontal angle instead of looking down.
+const CAMERA_OFFSET_X = 0;
+const CAMERA_Y = 1.7;
+const CAMERA_Z = 9;
+const LOOK_AT_Y = 1.4;
 const POS_LERP = 0.1;
 
 export function FollowCamera() {
