@@ -108,24 +108,40 @@ export function createGameStore() {
         character: { ...state.character, isJumping: true },
       };
 
-      // A beat can only be scored once — without this, mashing the jump key
-      // faster than the beat interval (but slower than the jump animation)
-      // could land multiple PERFECT/GOOD ratings against the same beat and
-      // inflate score/combo indefinitely.
-      const alreadyScoredThisBeat =
-        beatNumber !== undefined && beatNumber === state.lastScoredBeat;
-
-      if (rating !== "MISS" && !alreadyScoredThisBeat) {
+      if (rating === "MISS") {
+        // Mistimed-but-still-a-jump: an active combo absorbs the hit
+        // (shatters, but costs no rhythm); with no combo running, it costs
+        // a rhythm point instead. This is distinct from missGap() below,
+        // which is for not jumping at all over a gap — a harder failure
+        // with no combo shield.
         const currentScore = rebuildScore(state.score);
-        let newRhythm = rebuildRhythm(state.rhythm);
-        if (beatNumber !== undefined && state.theOneBeats.has(beatNumber)) {
-          newRhythm = newRhythm.gain();
+        if (currentScore.hasActiveCombo) {
+          Object.assign(updates, { score: toScoreState(currentScore.add("MISS")) });
+        } else {
+          const newRhythm = rebuildRhythm(state.rhythm).lose();
+          Object.assign(updates, {
+            rhythm: toRhythmState(newRhythm),
+            status: newRhythm.isDead ? ("GAME_OVER" as GameStatus) : ("PLAYING" as GameStatus),
+          });
         }
-        Object.assign(updates, {
-          score: toScoreState(currentScore.add(rating)),
-          rhythm: toRhythmState(newRhythm),
-          lastScoredBeat: beatNumber ?? state.lastScoredBeat,
-        });
+      } else {
+        // A beat can only be scored once — without this, mashing the jump
+        // key faster than the beat interval (but slower than the jump
+        // animation) could land multiple PERFECT/GOOD ratings against the
+        // same beat and inflate score/combo indefinitely.
+        const alreadyScoredThisBeat = beatNumber !== undefined && beatNumber === state.lastScoredBeat;
+        if (!alreadyScoredThisBeat) {
+          const currentScore = rebuildScore(state.score);
+          let newRhythm = rebuildRhythm(state.rhythm);
+          if (beatNumber !== undefined && state.theOneBeats.has(beatNumber)) {
+            newRhythm = newRhythm.gain();
+          }
+          Object.assign(updates, {
+            score: toScoreState(currentScore.add(rating)),
+            rhythm: toRhythmState(newRhythm),
+            lastScoredBeat: beatNumber ?? state.lastScoredBeat,
+          });
+        }
       }
 
       set(updates as GameState);

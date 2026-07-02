@@ -63,8 +63,12 @@ describe("Feature: GameStore", () => {
     });
 
     it("should shatter combo on MISS when combo is active", () => {
+      // registerJump always sets isJumping — a new jump can't register until
+      // the previous one lands, same as real gameplay.
       store.getState().registerJump("PERFECT");
+      store.getState().landCharacter();
       store.getState().registerJump("PERFECT");
+      store.getState().landCharacter();
       store.getState().registerJump("MISS");
 
       expect(store.getState().score.combo).toBe(0);
@@ -78,7 +82,10 @@ describe("Feature: GameStore", () => {
     });
 
     it("should transition to GAME_OVER after 5 rythmes lost", () => {
-      for (let i = 0; i < 5; i++) store.getState().registerJump("MISS");
+      for (let i = 0; i < 5; i++) {
+        store.getState().registerJump("MISS");
+        store.getState().landCharacter();
+      }
 
       expect(store.getState().status).toBe("GAME_OVER");
     });
@@ -114,9 +121,14 @@ describe("Feature: GameStore", () => {
   describe("Given the game ends", () => {
     it("should expose final score on GAME_OVER", () => {
       store.getState().startGame({ bpm: 98, trackId: "t" });
-      store.getState().registerJump("PERFECT");   // 100pts, combo: 1
-      store.getState().registerJump("MISS");      // combo shield — rhythm intact
-      for (let i = 0; i < 5; i++) store.getState().registerJump("MISS"); // 5 rythmes
+      store.getState().registerJump("PERFECT"); // 100pts, combo: 1
+      store.getState().landCharacter();
+      store.getState().registerJump("MISS"); // combo shield — rhythm intact
+      store.getState().landCharacter();
+      for (let i = 0; i < 5; i++) {
+        store.getState().registerJump("MISS"); // 5 rythmes, undefended (no combo)
+        store.getState().landCharacter();
+      }
 
       const { score, status } = store.getState();
       expect(status).toBe("GAME_OVER");
@@ -125,7 +137,10 @@ describe("Feature: GameStore", () => {
 
     it("should reset to IDLE on restart", () => {
       store.getState().startGame({ bpm: 98, trackId: "t" });
-      for (let i = 0; i < 5; i++) store.getState().registerJump("MISS");
+      for (let i = 0; i < 5; i++) {
+        store.getState().registerJump("MISS");
+        store.getState().landCharacter();
+      }
       store.getState().reset();
 
       const state = store.getState();
