@@ -2,11 +2,16 @@ import { useRef, useEffect } from "react";
 import { BeatEngine } from "../engine/BeatEngine";
 import { gameStore } from "../store/useGameStore";
 
-export function useBeatEngine(bpm: number) {
+export function useBeatEngine(beatTimestampsMs: number[]) {
   const engineRef = useRef<BeatEngine | null>(null);
+  const prevBeatmapRef = useRef<number[] | null>(null);
 
-  if (!engineRef.current) {
-    engineRef.current = BeatEngine.create({ bpm });
+  // Recreate the engine whenever the real beatmap changes (e.g. placeholder
+  // [] -> the actual loaded track) — BeatEngine's timestamps are fixed at
+  // construction, unlike the old bpm-only version which had nothing to swap.
+  if (engineRef.current === null || prevBeatmapRef.current !== beatTimestampsMs) {
+    engineRef.current = BeatEngine.create({ beatTimestampsMs });
+    prevBeatmapRef.current = beatTimestampsMs;
   }
 
   useEffect(() => {
@@ -17,18 +22,19 @@ export function useBeatEngine(bpm: number) {
       const state = gameStore.getState();
       if (state.status !== "PLAYING") return;
 
-      // beat%4===2 = GAP — player must be airborne; missGap() is a no-op if already jumping
-      if (beatNumber % 4 === 2) {
+      // GAP positions come from the actual generated platform layout
+      // (energy-driven, not a fixed modulo pattern) — missGap() is a no-op
+      // if the player is already airborne, i.e. cleared it.
+      if (state.gapBeats.has(beatNumber)) {
         gameStore.getState().missGap();
       }
-      // No advanceCharacter here — character moves continuously in Character.useFrame
     });
 
     return () => {
       engine.clearCallbacks();
       engine.reset();
     };
-  }, [bpm]);
+  }, [beatTimestampsMs]);
 
   return engineRef.current;
 }

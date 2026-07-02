@@ -1,5 +1,6 @@
 import { Canvas } from "@react-three/fiber";
 import { BeatEngine } from "../engine/BeatEngine";
+import { BeatmapEntry } from "../engine/PlatformGenerator";
 import { BeatLoop } from "./components/BeatLoop";
 import { BeatPulse } from "./components/BeatPulse";
 import { Character } from "./components/Character";
@@ -8,11 +9,10 @@ import { Platforms } from "./components/Platforms";
 
 interface Props {
   engine: BeatEngine;
-  bpm: number;
-  trackId: string;
+  beatmap: BeatmapEntry[];
 }
 
-export function GameScene({ engine, bpm, trackId }: Props) {
+export function GameScene({ engine, beatmap }: Props) {
   return (
     <Canvas
       camera={{ position: [-4, 3, 12], fov: 60 }}
@@ -25,7 +25,7 @@ export function GameScene({ engine, bpm, trackId }: Props) {
       <BeatLoop engine={engine} />
       <FollowCamera />
 
-      <Platforms bpm={bpm} seed={trackId} />
+      <Platforms beatmap={beatmap} />
       <Character />
     </Canvas>
   );

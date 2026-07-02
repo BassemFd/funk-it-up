@@ -1,0 +1,2295 @@
+{
+  "source": "01-sweet-addiction.mp3",
+  "generatedWith": "aubio (beat + onset)",
+  "generatedAt": "2026-07-02T09:50:59.027Z",
+  "beats": [
+    {
+      "timeMs": 1583.923,
+      "energy": 1
+    },
+    {
+      "timeMs": 2086.916,
+      "energy": 1
+    },
+    {
+      "timeMs": 2589.932,
+      "energy": 1
+    },
+    {
+      "timeMs": 3113.968,
+      "energy": 1
+    },
+    {
+      "timeMs": 3617.324,
+      "energy": 1
+    },
+    {
+      "timeMs": 4120.658,
+      "energy": 5
+    },
+    {
+      "timeMs": 4693.923,
+      "energy": 1
+    },
+    {
+      "timeMs": 5207.188,
+      "energy": 3
+    },
+    {
+      "timeMs": 5720.454,
+      "energy": 3
+    },
+    {
+      "timeMs": 6270.839,
+      "energy": 2
+    },
+    {
+      "timeMs": 6786.667,
+      "energy": 1
+    },
+    {
+      "timeMs": 7302.517,
+      "energy": 6
+    },
+    {
+      "timeMs": 8079.705,
+      "energy": 2
+    },
+    {
+      "timeMs": 8594.603,
+      "energy": 2
+    },
+    {
+      "timeMs": 9106.621,
+      "energy": 2
+    },
+    {
+      "timeMs": 9620.068,
+      "energy": 3
+    },
+    {
+      "timeMs": 10133.515,
+      "energy": 4
+    },
+    {
+      "timeMs": 10668.231,
+      "energy": 4
+    },
+    {
+      "timeMs": 11180.408,
+      "energy": 2
+    },
+    {
+      "timeMs": 11692.585,
+      "energy": 1
+    },
+    {
+      "timeMs": 12203.197,
+      "energy": 4
+    },
+    {
+      "timeMs": 12713.197,
+      "energy": 2
+    },
+    {
+      "timeMs": 13223.175,
+      "energy": 2
+    },
+    {
+      "timeMs": 13728.367,
+      "energy": 1
+    },
+    {
+      "timeMs": 14236.893,
+      "energy": 2
+    },
+    {
+      "timeMs": 14745.397,
+      "energy": 4
+    },
+    {
+      "timeMs": 15300.385,
+      "energy": 4
+    },
+    {
+      "timeMs": 15808.889,
+      "energy": 4
+    },
+    {
+      "timeMs": 16317.392,
+      "energy": 2
+    },
+    {
+      "timeMs": 16833.175,
+      "energy": 2
+    },
+    {
+      "timeMs": 17342.698,
+      "energy": 1
+    },
+    {
+      "timeMs": 17863.719,
+      "energy": 4
+    },
+    {
+      "timeMs": 18374.15,
+      "energy": 1
+    },
+    {
+      "timeMs": 18884.58,
+      "energy": 1
+    },
+    {
+      "timeMs": 19439.592,
+      "energy": 1
+    },
+    {
+      "timeMs": 19951.088,
+      "energy": 1
+    },
+    {
+      "timeMs": 20462.608,
+      "energy": 1
+    },
+    {
+      "timeMs": 20996.757,
+      "energy": 2
+    },
+    {
+      "timeMs": 21509.002,
+      "energy": 3
+    },
+    {
+      "timeMs": 22021.27,
+      "energy": 2
+    },
+    {
+      "timeMs": 22560.998,
+      "energy": 1
+    },
+    {
+      "timeMs": 23072.812,
+      "energy": 2
+    },
+    {
+      "timeMs": 23584.626,
+      "energy": 3
+    },
+    {
+      "timeMs": 24109.388,
+      "energy": 5
+    },
+    {
+      "timeMs": 24620.317,
+      "energy": 3
+    },
+    {
+      "timeMs": 25131.247,
+      "energy": 3
+    },
+    {
+      "timeMs": 25643.379,
+      "energy": 3
+    },
+    {
+      "timeMs": 26153.492,
+      "energy": 2
+    },
+    {
+      "timeMs": 26663.605,
+      "energy": 2
+    },
+    {
+      "timeMs": 27198.186,
+      "energy": 2
+    },
+    {
+      "timeMs": 27708.662,
+      "energy": 2
+    },
+    {
+      "timeMs": 28219.161,
+      "energy": 1
+    },
+    {
+      "timeMs": 28721.655,
+      "energy": 3
+    },
+    {
+      "timeMs": 29231.088,
+      "energy": 4
+    },
+    {
+      "timeMs": 29760.431,
+      "energy": 4
+    },
+    {
+      "timeMs": 30270.227,
+      "energy": 2
+    },
+    {
+      "timeMs": 30780.045,
+      "energy": 2
+    },
+    {
+      "timeMs": 31492.177,
+      "energy": 2
+    },
+    {
+      "timeMs": 32003.333,
+      "energy": 5
+    },
+    {
+      "timeMs": 32514.49,
+      "energy": 3
+    },
+    {
+      "timeMs": 33019.977,
+      "energy": 2
+    },
+    {
+      "timeMs": 33531.542,
+      "energy": 3
+    },
+    {
+      "timeMs": 34043.129,
+      "energy": 3
+    },
+    {
+      "timeMs": 34540,
+      "energy": 3
+    },
+    {
+      "timeMs": 35050.454,
+      "energy": 1
+    },
+    {
+      "timeMs": 35560.907,
+      "energy": 2
+    },
+    {
+      "timeMs": 36004.399,
+      "energy": 2
+    },
+    {
+      "timeMs": 36513.084,
+      "energy": 3
+    },
+    {
+      "timeMs": 37021.746,
+      "energy": 5
+    },
+    {
+      "timeMs": 37532.857,
+      "energy": 2
+    },
+    {
+      "timeMs": 38041.542,
+      "energy": 3
+    },
+    {
+      "timeMs": 38550.227,
+      "energy": 3
+    },
+    {
+      "timeMs": 39350.816,
+      "energy": 3
+    },
+    {
+      "timeMs": 39860.975,
+      "energy": 4
+    },
+    {
+      "timeMs": 40398.571,
+      "energy": 2
+    },
+    {
+      "timeMs": 40910.998,
+      "energy": 3
+    },
+    {
+      "timeMs": 41423.447,
+      "energy": 5
+    },
+    {
+      "timeMs": 41944.127,
+      "energy": 4
+    },
+    {
+      "timeMs": 42455.079,
+      "energy": 1
+    },
+    {
+      "timeMs": 42966.009,
+      "energy": 3
+    },
+    {
+      "timeMs": 43489.41,
+      "energy": 3
+    },
+    {
+      "timeMs": 43999.955,
+      "energy": 4
+    },
+    {
+      "timeMs": 44510.499,
+      "energy": 2
+    },
+    {
+      "timeMs": 45047.166,
+      "energy": 3
+    },
+    {
+      "timeMs": 45558.118,
+      "energy": 4
+    },
+    {
+      "timeMs": 46084.49,
+      "energy": 2
+    },
+    {
+      "timeMs": 46595.556,
+      "energy": 2
+    },
+    {
+      "timeMs": 47106.621,
+      "energy": 1
+    },
+    {
+      "timeMs": 47625.986,
+      "energy": 1
+    },
+    {
+      "timeMs": 48137.279,
+      "energy": 2
+    },
+    {
+      "timeMs": 48648.571,
+      "energy": 1
+    },
+    {
+      "timeMs": 49180.816,
+      "energy": 4
+    },
+    {
+      "timeMs": 49691.565,
+      "energy": 4
+    },
+    {
+      "timeMs": 50202.336,
+      "energy": 2
+    },
+    {
+      "timeMs": 50723.084,
+      "energy": 2
+    },
+    {
+      "timeMs": 51232.721,
+      "energy": 1
+    },
+    {
+      "timeMs": 51742.336,
+      "energy": 1
+    },
+    {
+      "timeMs": 52263.152,
+      "energy": 2
+    },
+    {
+      "timeMs": 52772.698,
+      "energy": 0
+    },
+    {
+      "timeMs": 53282.245,
+      "energy": 0
+    },
+    {
+      "timeMs": 53974.762,
+      "energy": 3
+    },
+    {
+      "timeMs": 54482.676,
+      "energy": 1
+    },
+    {
+      "timeMs": 55119.433,
+      "energy": 0
+    },
+    {
+      "timeMs": 55625.896,
+      "energy": 2
+    },
+    {
+      "timeMs": 56132.336,
+      "energy": 1
+    },
+    {
+      "timeMs": 56700.181,
+      "energy": 1
+    },
+    {
+      "timeMs": 57217.687,
+      "energy": 2
+    },
+    {
+      "timeMs": 57735.215,
+      "energy": 3
+    },
+    {
+      "timeMs": 58260.544,
+      "energy": 3
+    },
+    {
+      "timeMs": 58782.404,
+      "energy": 2
+    },
+    {
+      "timeMs": 59304.263,
+      "energy": 2
+    },
+    {
+      "timeMs": 59792.086,
+      "energy": 1
+    },
+    {
+      "timeMs": 60304.762,
+      "energy": 2
+    },
+    {
+      "timeMs": 60817.415,
+      "energy": 4
+    },
+    {
+      "timeMs": 61351.995,
+      "energy": 4
+    },
+    {
+      "timeMs": 61864.014,
+      "energy": 2
+    },
+    {
+      "timeMs": 62376.054,
+      "energy": 2
+    },
+    {
+      "timeMs": 62883.469,
+      "energy": 3
+    },
+    {
+      "timeMs": 63394.444,
+      "energy": 3
+    },
+    {
+      "timeMs": 64153.22,
+      "energy": 2
+    },
+    {
+      "timeMs": 64664.58,
+      "energy": 2
+    },
+    {
+      "timeMs": 65175.918,
+      "energy": 4
+    },
+    {
+      "timeMs": 65739.274,
+      "energy": 2
+    },
+    {
+      "timeMs": 66250.408,
+      "energy": 2
+    },
+    {
+      "timeMs": 66761.542,
+      "energy": 4
+    },
+    {
+      "timeMs": 67290.408,
+      "energy": 1
+    },
+    {
+      "timeMs": 67801.383,
+      "energy": 1
+    },
+    {
+      "timeMs": 68312.381,
+      "energy": 3
+    },
+    {
+      "timeMs": 68847.415,
+      "energy": 1
+    },
+    {
+      "timeMs": 69358.503,
+      "energy": 4
+    },
+    {
+      "timeMs": 69879.41,
+      "energy": 3
+    },
+    {
+      "timeMs": 70390.703,
+      "energy": 3
+    },
+    {
+      "timeMs": 70901.995,
+      "energy": 2
+    },
+    {
+      "timeMs": 71422.2,
+      "energy": 3
+    },
+    {
+      "timeMs": 71933.673,
+      "energy": 2
+    },
+    {
+      "timeMs": 72445.147,
+      "energy": 1
+    },
+    {
+      "timeMs": 72976.735,
+      "energy": 3
+    },
+    {
+      "timeMs": 73488.707,
+      "energy": 3
+    },
+    {
+      "timeMs": 74000.703,
+      "energy": 2
+    },
+    {
+      "timeMs": 74525.465,
+      "energy": 2
+    },
+    {
+      "timeMs": 75036.508,
+      "energy": 4
+    },
+    {
+      "timeMs": 75547.528,
+      "energy": 3
+    },
+    {
+      "timeMs": 76070.34,
+      "energy": 1
+    },
+    {
+      "timeMs": 76581.678,
+      "energy": 1
+    },
+    {
+      "timeMs": 77093.016,
+      "energy": 2
+    },
+    {
+      "timeMs": 77636.236,
+      "energy": 3
+    },
+    {
+      "timeMs": 78147.302,
+      "energy": 3
+    },
+    {
+      "timeMs": 78658.345,
+      "energy": 3
+    },
+    {
+      "timeMs": 79182.063,
+      "energy": 2
+    },
+    {
+      "timeMs": 79692.63,
+      "energy": 3
+    },
+    {
+      "timeMs": 80203.197,
+      "energy": 1
+    },
+    {
+      "timeMs": 80735.737,
+      "energy": 3
+    },
+    {
+      "timeMs": 81246.553,
+      "energy": 1
+    },
+    {
+      "timeMs": 81770.295,
+      "energy": 3
+    },
+    {
+      "timeMs": 82280.567,
+      "energy": 3
+    },
+    {
+      "timeMs": 82790.816,
+      "energy": 4
+    },
+    {
+      "timeMs": 83317.891,
+      "energy": 4
+    },
+    {
+      "timeMs": 83828.435,
+      "energy": 4
+    },
+    {
+      "timeMs": 84338.98,
+      "energy": 2
+    },
+    {
+      "timeMs": 84880.635,
+      "energy": 1
+    },
+    {
+      "timeMs": 85392.834,
+      "energy": 3
+    },
+    {
+      "timeMs": 85905.034,
+      "energy": 4
+    },
+    {
+      "timeMs": 86434.49,
+      "energy": 4
+    },
+    {
+      "timeMs": 86946.803,
+      "energy": 2
+    },
+    {
+      "timeMs": 87459.093,
+      "energy": 1
+    },
+    {
+      "timeMs": 87971.519,
+      "energy": 2
+    },
+    {
+      "timeMs": 88482.494,
+      "energy": 2
+    },
+    {
+      "timeMs": 88993.447,
+      "energy": 1
+    },
+    {
+      "timeMs": 89519.388,
+      "energy": 3
+    },
+    {
+      "timeMs": 90029.751,
+      "energy": 1
+    },
+    {
+      "timeMs": 90540.113,
+      "energy": 4
+    },
+    {
+      "timeMs": 91083.741,
+      "energy": 4
+    },
+    {
+      "timeMs": 91592.902,
+      "energy": 4
+    },
+    {
+      "timeMs": 92102.063,
+      "energy": 2
+    },
+    {
+      "timeMs": 92624.49,
+      "energy": 4
+    },
+    {
+      "timeMs": 93135.397,
+      "energy": 2
+    },
+    {
+      "timeMs": 93673.741,
+      "energy": 3
+    },
+    {
+      "timeMs": 94185.556,
+      "energy": 2
+    },
+    {
+      "timeMs": 94697.37,
+      "energy": 4
+    },
+    {
+      "timeMs": 95224.195,
+      "energy": 4
+    },
+    {
+      "timeMs": 95735.034,
+      "energy": 2
+    },
+    {
+      "timeMs": 96245.873,
+      "energy": 1
+    },
+    {
+      "timeMs": 96757.506,
+      "energy": 2
+    },
+    {
+      "timeMs": 97266.054,
+      "energy": 4
+    },
+    {
+      "timeMs": 97774.58,
+      "energy": 4
+    },
+    {
+      "timeMs": 98327.234,
+      "energy": 4
+    },
+    {
+      "timeMs": 98836.825,
+      "energy": 3
+    },
+    {
+      "timeMs": 99346.395,
+      "energy": 6
+    },
+    {
+      "timeMs": 99869.433,
+      "energy": 3
+    },
+    {
+      "timeMs": 100379.002,
+      "energy": 4
+    },
+    {
+      "timeMs": 100888.594,
+      "energy": 2
+    },
+    {
+      "timeMs": 101414.785,
+      "energy": 2
+    },
+    {
+      "timeMs": 101925.828,
+      "energy": 2
+    },
+    {
+      "timeMs": 102436.871,
+      "energy": 3
+    },
+    {
+      "timeMs": 103241.723,
+      "energy": 3
+    },
+    {
+      "timeMs": 103752.177,
+      "energy": 2
+    },
+    {
+      "timeMs": 104271.905,
+      "energy": 2
+    },
+    {
+      "timeMs": 104781.701,
+      "energy": 2
+    },
+    {
+      "timeMs": 105291.474,
+      "energy": 3
+    },
+    {
+      "timeMs": 106058.571,
+      "energy": 1
+    },
+    {
+      "timeMs": 106567.007,
+      "energy": 1
+    },
+    {
+      "timeMs": 107481.791,
+      "energy": 4
+    },
+    {
+      "timeMs": 107989.252,
+      "energy": 2
+    },
+    {
+      "timeMs": 108667.778,
+      "energy": 0
+    },
+    {
+      "timeMs": 109174.263,
+      "energy": 1
+    },
+    {
+      "timeMs": 109680.726,
+      "energy": 2
+    },
+    {
+      "timeMs": 110195.079,
+      "energy": 0
+    },
+    {
+      "timeMs": 110702.472,
+      "energy": 1
+    },
+    {
+      "timeMs": 111209.841,
+      "energy": 1
+    },
+    {
+      "timeMs": 111754.399,
+      "energy": 3
+    },
+    {
+      "timeMs": 112265.306,
+      "energy": 3
+    },
+    {
+      "timeMs": 112776.213,
+      "energy": 3
+    },
+    {
+      "timeMs": 113313.56,
+      "energy": 2
+    },
+    {
+      "timeMs": 113827.166,
+      "energy": 2
+    },
+    {
+      "timeMs": 114340.794,
+      "energy": 2
+    },
+    {
+      "timeMs": 114890.136,
+      "energy": 6
+    },
+    {
+      "timeMs": 115405.85,
+      "energy": 4
+    },
+    {
+      "timeMs": 115929.773,
+      "energy": 2
+    },
+    {
+      "timeMs": 116444.036,
+      "energy": 4
+    },
+    {
+      "timeMs": 116958.299,
+      "energy": 1
+    },
+    {
+      "timeMs": 117475.306,
+      "energy": 1
+    },
+    {
+      "timeMs": 117988.005,
+      "energy": 2
+    },
+    {
+      "timeMs": 118500.726,
+      "energy": 1
+    },
+    {
+      "timeMs": 119025.42,
+      "energy": 2
+    },
+    {
+      "timeMs": 119536.213,
+      "energy": 1
+    },
+    {
+      "timeMs": 120047.029,
+      "energy": 3
+    },
+    {
+      "timeMs": 120572.676,
+      "energy": 3
+    },
+    {
+      "timeMs": 121083.673,
+      "energy": 3
+    },
+    {
+      "timeMs": 121594.671,
+      "energy": 2
+    },
+    {
+      "timeMs": 122121.247,
+      "energy": 1
+    },
+    {
+      "timeMs": 122632.086,
+      "energy": 3
+    },
+    {
+      "timeMs": 123142.925,
+      "energy": 7
+    },
+    {
+      "timeMs": 123668.005,
+      "energy": 4
+    },
+    {
+      "timeMs": 124178.481,
+      "energy": 2
+    },
+    {
+      "timeMs": 124688.957,
+      "energy": 3
+    },
+    {
+      "timeMs": 125208.98,
+      "energy": 3
+    },
+    {
+      "timeMs": 125718.617,
+      "energy": 2
+    },
+    {
+      "timeMs": 126228.254,
+      "energy": 2
+    },
+    {
+      "timeMs": 126771.882,
+      "energy": 3
+    },
+    {
+      "timeMs": 127283.016,
+      "energy": 3
+    },
+    {
+      "timeMs": 128064.127,
+      "energy": 2
+    },
+    {
+      "timeMs": 128575.283,
+      "energy": 2
+    },
+    {
+      "timeMs": 129086.44,
+      "energy": 3
+    },
+    {
+      "timeMs": 129619.615,
+      "energy": 2
+    },
+    {
+      "timeMs": 130132.018,
+      "energy": 2
+    },
+    {
+      "timeMs": 130644.399,
+      "energy": 2
+    },
+    {
+      "timeMs": 131455.283,
+      "energy": 3
+    },
+    {
+      "timeMs": 131966.757,
+      "energy": 3
+    },
+    {
+      "timeMs": 132469.07,
+      "energy": 3
+    },
+    {
+      "timeMs": 132978.526,
+      "energy": 2
+    },
+    {
+      "timeMs": 133488.005,
+      "energy": 2
+    },
+    {
+      "timeMs": 134007.755,
+      "energy": 1
+    },
+    {
+      "timeMs": 134517.415,
+      "energy": 1
+    },
+    {
+      "timeMs": 135027.052,
+      "energy": 2
+    },
+    {
+      "timeMs": 135560.068,
+      "energy": 1
+    },
+    {
+      "timeMs": 136070.113,
+      "energy": 2
+    },
+    {
+      "timeMs": 136580.136,
+      "energy": 4
+    },
+    {
+      "timeMs": 137101.633,
+      "energy": 2
+    },
+    {
+      "timeMs": 137611.383,
+      "energy": 2
+    },
+    {
+      "timeMs": 138121.111,
+      "energy": 3
+    },
+    {
+      "timeMs": 138649.501,
+      "energy": 2
+    },
+    {
+      "timeMs": 139161.27,
+      "energy": 2
+    },
+    {
+      "timeMs": 139673.016,
+      "energy": 8
+    },
+    {
+      "timeMs": 140491.179,
+      "energy": 4
+    },
+    {
+      "timeMs": 141003.81,
+      "energy": 2
+    },
+    {
+      "timeMs": 141521.111,
+      "energy": 3
+    },
+    {
+      "timeMs": 142033.56,
+      "energy": 2
+    },
+    {
+      "timeMs": 142546.009,
+      "energy": 0
+    },
+    {
+      "timeMs": 143053.605,
+      "energy": 1
+    },
+    {
+      "timeMs": 143564.853,
+      "energy": 4
+    },
+    {
+      "timeMs": 144076.1,
+      "energy": 2
+    },
+    {
+      "timeMs": 144625.828,
+      "energy": 2
+    },
+    {
+      "timeMs": 145135.964,
+      "energy": 5
+    },
+    {
+      "timeMs": 145680.113,
+      "energy": 4
+    },
+    {
+      "timeMs": 146192.177,
+      "energy": 2
+    },
+    {
+      "timeMs": 146704.24,
+      "energy": 5
+    },
+    {
+      "timeMs": 147203.583,
+      "energy": 3
+    },
+    {
+      "timeMs": 147714.24,
+      "energy": 2
+    },
+    {
+      "timeMs": 148224.898,
+      "energy": 4
+    },
+    {
+      "timeMs": 148747.279,
+      "energy": 3
+    },
+    {
+      "timeMs": 149256.122,
+      "energy": 4
+    },
+    {
+      "timeMs": 149764.966,
+      "energy": 3
+    },
+    {
+      "timeMs": 150287.868,
+      "energy": 4
+    },
+    {
+      "timeMs": 150795.737,
+      "energy": 2
+    },
+    {
+      "timeMs": 151303.605,
+      "energy": 3
+    },
+    {
+      "timeMs": 151825.374,
+      "energy": 4
+    },
+    {
+      "timeMs": 152334.399,
+      "energy": 4
+    },
+    {
+      "timeMs": 152843.447,
+      "energy": 3
+    },
+    {
+      "timeMs": 153404.807,
+      "energy": 3
+    },
+    {
+      "timeMs": 153916.054,
+      "energy": 4
+    },
+    {
+      "timeMs": 154427.324,
+      "energy": 2
+    },
+    {
+      "timeMs": 154953.946,
+      "energy": 5
+    },
+    {
+      "timeMs": 155467.347,
+      "energy": 2
+    },
+    {
+      "timeMs": 155980.771,
+      "energy": 1
+    },
+    {
+      "timeMs": 156511.655,
+      "energy": 3
+    },
+    {
+      "timeMs": 157024.036,
+      "energy": 1
+    },
+    {
+      "timeMs": 157536.961,
+      "energy": 2
+    },
+    {
+      "timeMs": 158048.254,
+      "energy": 2
+    },
+    {
+      "timeMs": 158559.546,
+      "energy": 4
+    },
+    {
+      "timeMs": 159103.878,
+      "energy": 1
+    },
+    {
+      "timeMs": 159614.535,
+      "energy": 4
+    },
+    {
+      "timeMs": 160125.193,
+      "energy": 4
+    },
+    {
+      "timeMs": 160659.478,
+      "energy": 3
+    },
+    {
+      "timeMs": 161171.247,
+      "energy": 3
+    },
+    {
+      "timeMs": 161683.039,
+      "energy": 4
+    },
+    {
+      "timeMs": 162227.528,
+      "energy": 4
+    },
+    {
+      "timeMs": 162740.771,
+      "energy": 2
+    },
+    {
+      "timeMs": 163254.014,
+      "energy": 6
+    },
+    {
+      "timeMs": 163764.58,
+      "energy": 2
+    },
+    {
+      "timeMs": 164275.76,
+      "energy": 3
+    },
+    {
+      "timeMs": 164786.916,
+      "energy": 3
+    },
+    {
+      "timeMs": 165293.061,
+      "energy": 3
+    },
+    {
+      "timeMs": 165802.766,
+      "energy": 2
+    },
+    {
+      "timeMs": 166312.472,
+      "energy": 5
+    },
+    {
+      "timeMs": 166853.22,
+      "energy": 3
+    },
+    {
+      "timeMs": 167360.907,
+      "energy": 2
+    },
+    {
+      "timeMs": 167868.617,
+      "energy": 2
+    },
+    {
+      "timeMs": 168390.363,
+      "energy": 3
+    },
+    {
+      "timeMs": 168899.388,
+      "energy": 4
+    },
+    {
+      "timeMs": 169437.234,
+      "energy": 2
+    },
+    {
+      "timeMs": 169948.617,
+      "energy": 3
+    },
+    {
+      "timeMs": 170460,
+      "energy": 3
+    },
+    {
+      "timeMs": 171012.268,
+      "energy": 2
+    },
+    {
+      "timeMs": 171525.238,
+      "energy": 3
+    },
+    {
+      "timeMs": 172038.209,
+      "energy": 2
+    },
+    {
+      "timeMs": 172551.043,
+      "energy": 0
+    },
+    {
+      "timeMs": 173061.95,
+      "energy": 0
+    },
+    {
+      "timeMs": 173572.857,
+      "energy": 2
+    },
+    {
+      "timeMs": 174090.295,
+      "energy": 2
+    },
+    {
+      "timeMs": 174600.794,
+      "energy": 2
+    },
+    {
+      "timeMs": 175111.315,
+      "energy": 1
+    },
+    {
+      "timeMs": 175634.807,
+      "energy": 0
+    },
+    {
+      "timeMs": 176142.608,
+      "energy": 0
+    },
+    {
+      "timeMs": 176650.431,
+      "energy": 1
+    },
+    {
+      "timeMs": 177320.408,
+      "energy": 2
+    },
+    {
+      "timeMs": 177828.957,
+      "energy": 2
+    },
+    {
+      "timeMs": 178469.138,
+      "energy": 4
+    },
+    {
+      "timeMs": 178979.433,
+      "energy": 2
+    },
+    {
+      "timeMs": 179489.728,
+      "energy": 2
+    },
+    {
+      "timeMs": 180051.723,
+      "energy": 3
+    },
+    {
+      "timeMs": 180567.528,
+      "energy": 1
+    },
+    {
+      "timeMs": 181083.333,
+      "energy": 5
+    },
+    {
+      "timeMs": 181605.986,
+      "energy": 4
+    },
+    {
+      "timeMs": 182120.34,
+      "energy": 2
+    },
+    {
+      "timeMs": 182634.717,
+      "energy": 4
+    },
+    {
+      "timeMs": 183162.222,
+      "energy": 2
+    },
+    {
+      "timeMs": 183675.238,
+      "energy": 1
+    },
+    {
+      "timeMs": 184188.277,
+      "energy": 2
+    },
+    {
+      "timeMs": 184720.023,
+      "energy": 3
+    },
+    {
+      "timeMs": 185232.993,
+      "energy": 2
+    },
+    {
+      "timeMs": 185745.964,
+      "energy": 2
+    },
+    {
+      "timeMs": 186246.825,
+      "energy": 3
+    },
+    {
+      "timeMs": 186757.211,
+      "energy": 3
+    },
+    {
+      "timeMs": 187278.277,
+      "energy": 3
+    },
+    {
+      "timeMs": 187788.413,
+      "energy": 1
+    },
+    {
+      "timeMs": 188298.549,
+      "energy": 2
+    },
+    {
+      "timeMs": 188827.528,
+      "energy": 3
+    },
+    {
+      "timeMs": 189339.751,
+      "energy": 3
+    },
+    {
+      "timeMs": 189851.973,
+      "energy": 5
+    },
+    {
+      "timeMs": 190396.984,
+      "energy": 1
+    },
+    {
+      "timeMs": 190909.456,
+      "energy": 2
+    },
+    {
+      "timeMs": 191421.95,
+      "energy": 4
+    },
+    {
+      "timeMs": 191949.501,
+      "energy": 1
+    },
+    {
+      "timeMs": 192463.424,
+      "energy": 2
+    },
+    {
+      "timeMs": 192977.37,
+      "energy": 2
+    },
+    {
+      "timeMs": 193492.789,
+      "energy": 3
+    },
+    {
+      "timeMs": 194003.016,
+      "energy": 2
+    },
+    {
+      "timeMs": 194513.243,
+      "energy": 1
+    },
+    {
+      "timeMs": 195025.351,
+      "energy": 3
+    },
+    {
+      "timeMs": 195535.193,
+      "energy": 3
+    },
+    {
+      "timeMs": 196045.034,
+      "energy": 4
+    },
+    {
+      "timeMs": 196602.063,
+      "energy": 1
+    },
+    {
+      "timeMs": 197113.991,
+      "energy": 2
+    },
+    {
+      "timeMs": 197625.918,
+      "energy": 7
+    },
+    {
+      "timeMs": 198434.898,
+      "energy": 2
+    },
+    {
+      "timeMs": 198947.188,
+      "energy": 4
+    },
+    {
+      "timeMs": 199437.778,
+      "energy": 3
+    },
+    {
+      "timeMs": 199949.342,
+      "energy": 2
+    },
+    {
+      "timeMs": 200460.907,
+      "energy": 1
+    },
+    {
+      "timeMs": 201001.315,
+      "energy": 2
+    },
+    {
+      "timeMs": 201512.608,
+      "energy": 1
+    },
+    {
+      "timeMs": 202023.878,
+      "energy": 1
+    },
+    {
+      "timeMs": 202529.705,
+      "energy": 2
+    },
+    {
+      "timeMs": 203039.569,
+      "energy": 2
+    },
+    {
+      "timeMs": 203549.456,
+      "energy": 4
+    },
+    {
+      "timeMs": 204080.59,
+      "energy": 3
+    },
+    {
+      "timeMs": 204591.837,
+      "energy": 3
+    },
+    {
+      "timeMs": 205365.601,
+      "energy": 2
+    },
+    {
+      "timeMs": 205879.025,
+      "energy": 5
+    },
+    {
+      "timeMs": 206392.426,
+      "energy": 5
+    },
+    {
+      "timeMs": 206940.658,
+      "energy": 4
+    },
+    {
+      "timeMs": 207452.676,
+      "energy": 1
+    },
+    {
+      "timeMs": 207964.717,
+      "energy": 2
+    },
+    {
+      "timeMs": 208479.388,
+      "energy": 2
+    },
+    {
+      "timeMs": 208990.612,
+      "energy": 1
+    },
+    {
+      "timeMs": 209501.837,
+      "energy": 2
+    },
+    {
+      "timeMs": 209808.98,
+      "energy": 2
+    },
+    {
+      "timeMs": 210318.98,
+      "energy": 1
+    },
+    {
+      "timeMs": 210828.98,
+      "energy": 2
+    },
+    {
+      "timeMs": 211323.673,
+      "energy": 1
+    },
+    {
+      "timeMs": 211833.56,
+      "energy": 2
+    },
+    {
+      "timeMs": 212343.424,
+      "energy": 1
+    },
+    {
+      "timeMs": 212872.222,
+      "energy": 0
+    },
+    {
+      "timeMs": 213385.215,
+      "energy": 0
+    },
+    {
+      "timeMs": 213898.231,
+      "energy": 1
+    },
+    {
+      "timeMs": 214391.497,
+      "energy": 2
+    },
+    {
+      "timeMs": 214900.839,
+      "energy": 1
+    },
+    {
+      "timeMs": 215410.204,
+      "energy": 2
+    },
+    {
+      "timeMs": 215966.621,
+      "energy": 2
+    },
+    {
+      "timeMs": 216475.261,
+      "energy": 2
+    },
+    {
+      "timeMs": 217017.868,
+      "energy": 0
+    },
+    {
+      "timeMs": 217527.12,
+      "energy": 2
+    },
+    {
+      "timeMs": 218036.372,
+      "energy": 1
+    },
+    {
+      "timeMs": 218543.719,
+      "energy": 2
+    },
+    {
+      "timeMs": 219052.653,
+      "energy": 2
+    },
+    {
+      "timeMs": 219561.61,
+      "energy": 3
+    },
+    {
+      "timeMs": 220136.236,
+      "energy": 2
+    },
+    {
+      "timeMs": 220905.374,
+      "energy": 0
+    },
+    {
+      "timeMs": 221671.02,
+      "energy": 0
+    },
+    {
+      "timeMs": 222437.687,
+      "energy": 5
+    },
+    {
+      "timeMs": 223202.608,
+      "energy": 3
+    },
+    {
+      "timeMs": 223968.481,
+      "energy": 2
+    },
+    {
+      "timeMs": 224780.68,
+      "energy": 1
+    },
+    {
+      "timeMs": 225547.392,
+      "energy": 4
+    },
+    {
+      "timeMs": 226305.306,
+      "energy": 3
+    },
+    {
+      "timeMs": 227066.757,
+      "energy": 4
+    },
+    {
+      "timeMs": 227864.603,
+      "energy": 3
+    },
+    {
+      "timeMs": 228625.442,
+      "energy": 5
+    },
+    {
+      "timeMs": 229423.968,
+      "energy": 4
+    },
+    {
+      "timeMs": 230198.186,
+      "energy": 4
+    },
+    {
+      "timeMs": 231027.551,
+      "energy": 4
+    },
+    {
+      "timeMs": 231804.331,
+      "energy": 4
+    },
+    {
+      "timeMs": 232559.977,
+      "energy": 4
+    },
+    {
+      "timeMs": 233326.145,
+      "energy": 2
+    },
+    {
+      "timeMs": 233837.574,
+      "energy": 3
+    },
+    {
+      "timeMs": 234349.002,
+      "energy": 2
+    },
+    {
+      "timeMs": 234871.769,
+      "energy": 0
+    },
+    {
+      "timeMs": 235380.794,
+      "energy": 3
+    },
+    {
+      "timeMs": 235889.819,
+      "energy": 4
+    },
+    {
+      "timeMs": 236415.533,
+      "energy": 2
+    },
+    {
+      "timeMs": 236924.694,
+      "energy": 2
+    },
+    {
+      "timeMs": 237433.878,
+      "energy": 2
+    },
+    {
+      "timeMs": 237959.002,
+      "energy": 2
+    },
+    {
+      "timeMs": 238468.458,
+      "energy": 3
+    },
+    {
+      "timeMs": 238977.891,
+      "energy": 1
+    },
+    {
+      "timeMs": 239515.714,
+      "energy": 2
+    },
+    {
+      "timeMs": 240025.351,
+      "energy": 4
+    },
+    {
+      "timeMs": 240535.011,
+      "energy": 4
+    },
+    {
+      "timeMs": 241067.188,
+      "energy": 1
+    },
+    {
+      "timeMs": 241576.735,
+      "energy": 3
+    },
+    {
+      "timeMs": 242086.281,
+      "energy": 3
+    },
+    {
+      "timeMs": 242616.236,
+      "energy": 3
+    },
+    {
+      "timeMs": 243126.463,
+      "energy": 0
+    },
+    {
+      "timeMs": 243636.712,
+      "energy": 2
+    },
+    {
+      "timeMs": 244166.327,
+      "energy": 6
+    },
+    {
+      "timeMs": 244676.19,
+      "energy": 3
+    },
+    {
+      "timeMs": 245186.032,
+      "energy": 4
+    },
+    {
+      "timeMs": 245975.42,
+      "energy": 2
+    },
+    {
+      "timeMs": 246485.465,
+      "energy": 3
+    },
+    {
+      "timeMs": 247027.619,
+      "energy": 2
+    },
+    {
+      "timeMs": 247538.299,
+      "energy": 2
+    },
+    {
+      "timeMs": 248048.957,
+      "energy": 2
+    },
+    {
+      "timeMs": 248577.211,
+      "energy": 4
+    },
+    {
+      "timeMs": 249088.322,
+      "energy": 2
+    },
+    {
+      "timeMs": 249599.433,
+      "energy": 4
+    },
+    {
+      "timeMs": 250123.107,
+      "energy": 3
+    },
+    {
+      "timeMs": 250633.129,
+      "energy": 3
+    },
+    {
+      "timeMs": 251158.413,
+      "energy": 2
+    },
+    {
+      "timeMs": 251667.664,
+      "energy": 1
+    },
+    {
+      "timeMs": 252176.939,
+      "energy": 2
+    },
+    {
+      "timeMs": 252704.059,
+      "energy": 5
+    },
+    {
+      "timeMs": 253213.379,
+      "energy": 2
+    },
+    {
+      "timeMs": 253722.676,
+      "energy": 2
+    },
+    {
+      "timeMs": 254257.256,
+      "energy": 1
+    },
+    {
+      "timeMs": 254767.438,
+      "energy": 2
+    },
+    {
+      "timeMs": 255277.619,
+      "energy": 3
+    },
+    {
+      "timeMs": 255824.626,
+      "energy": 2
+    },
+    {
+      "timeMs": 256336.077,
+      "energy": 2
+    },
+    {
+      "timeMs": 256847.528,
+      "energy": 1
+    },
+    {
+      "timeMs": 257367.098,
+      "energy": 1
+    },
+    {
+      "timeMs": 257877.891,
+      "energy": 1
+    },
+    {
+      "timeMs": 258388.685,
+      "energy": 6
+    },
+    {
+      "timeMs": 259172.834,
+      "energy": 2
+    },
+    {
+      "timeMs": 259682.358,
+      "energy": 0
+    },
+    {
+      "timeMs": 260193.469,
+      "energy": 2
+    },
+    {
+      "timeMs": 260702.971,
+      "energy": 3
+    },
+    {
+      "timeMs": 261212.449,
+      "energy": 4
+    },
+    {
+      "timeMs": 261781.61,
+      "energy": 2
+    },
+    {
+      "timeMs": 262292.245,
+      "energy": 4
+    },
+    {
+      "timeMs": 262802.902,
+      "energy": 4
+    },
+    {
+      "timeMs": 263329.796,
+      "energy": 4
+    },
+    {
+      "timeMs": 263840.567,
+      "energy": 3
+    },
+    {
+      "timeMs": 264351.338,
+      "energy": 4
+    },
+    {
+      "timeMs": 264873.424,
+      "energy": 2
+    },
+    {
+      "timeMs": 265383.946,
+      "energy": 2
+    },
+    {
+      "timeMs": 265894.467,
+      "energy": 5
+    },
+    {
+      "timeMs": 266422.857,
+      "energy": 4
+    },
+    {
+      "timeMs": 266932.154,
+      "energy": 4
+    },
+    {
+      "timeMs": 267441.429,
+      "energy": 4
+    },
+    {
+      "timeMs": 267980.658,
+      "energy": 3
+    },
+    {
+      "timeMs": 268490.68,
+      "energy": 5
+    },
+    {
+      "timeMs": 269013.333,
+      "energy": 2
+    },
+    {
+      "timeMs": 269523.243,
+      "energy": 2
+    },
+    {
+      "timeMs": 270033.152,
+      "energy": 4
+    },
+    {
+      "timeMs": 270558.617,
+      "energy": 2
+    },
+    {
+      "timeMs": 271068.776,
+      "energy": 3
+    },
+    {
+      "timeMs": 271578.912,
+      "energy": 3
+    },
+    {
+      "timeMs": 272110.522,
+      "energy": 4
+    },
+    {
+      "timeMs": 272620.726,
+      "energy": 2
+    },
+    {
+      "timeMs": 273130.952,
+      "energy": 4
+    },
+    {
+      "timeMs": 273656.417,
+      "energy": 2
+    },
+    {
+      "timeMs": 274166.372,
+      "energy": 3
+    },
+    {
+      "timeMs": 274676.304,
+      "energy": 3
+    },
+    {
+      "timeMs": 275207.279,
+      "energy": 3
+    },
+    {
+      "timeMs": 275717.46,
+      "energy": 1
+    },
+    {
+      "timeMs": 276227.642,
+      "energy": 2
+    },
+    {
+      "timeMs": 276767.166,
+      "energy": 1
+    },
+    {
+      "timeMs": 277277.596,
+      "energy": 4
+    },
+    {
+      "timeMs": 277788.05,
+      "energy": 3
+    },
+    {
+      "timeMs": 278318.345,
+      "energy": 2
+    },
+    {
+      "timeMs": 278829.093,
+      "energy": 2
+    },
+    {
+      "timeMs": 279339.819,
+      "energy": 2
+    },
+    {
+      "timeMs": 279870.771,
+      "energy": 2
+    },
+    {
+      "timeMs": 280382.268,
+      "energy": 1
+    },
+    {
+      "timeMs": 280910.408,
+      "energy": 2
+    },
+    {
+      "timeMs": 281420.771,
+      "energy": 3
+    },
+    {
+      "timeMs": 281931.156,
+      "energy": 4
+    },
+    {
+      "timeMs": 282454.989,
+      "energy": 2
+    },
+    {
+      "timeMs": 282964.626,
+      "energy": 2
+    },
+    {
+      "timeMs": 283474.263,
+      "energy": 1
+    },
+    {
+      "timeMs": 283996.054,
+      "energy": 2
+    },
+    {
+      "timeMs": 284505.873,
+      "energy": 1
+    },
+    {
+      "timeMs": 285015.669,
+      "energy": 3
+    },
+    {
+      "timeMs": 285565.782,
+      "energy": 2
+    },
+    {
+      "timeMs": 286076.145,
+      "energy": 4
+    },
+    {
+      "timeMs": 286586.508,
+      "energy": 3
+    },
+    {
+      "timeMs": 287118.209,
+      "energy": 0
+    },
+    {
+      "timeMs": 287628.753,
+      "energy": 1
+    },
+    {
+      "timeMs": 288139.297,
+      "energy": 1
+    },
+    {
+      "timeMs": 288663.107,
+      "energy": 1
+    },
+    {
+      "timeMs": 289172.54,
+      "energy": 4
+    },
+    {
+      "timeMs": 289681.973,
+      "energy": 3
+    },
+    {
+      "timeMs": 290210.952,
+      "energy": 1
+    },
+    {
+      "timeMs": 290720.612,
+      "energy": 2
+    },
+    {
+      "timeMs": 291230.272,
+      "energy": 1
+    },
+    {
+      "timeMs": 291747.959,
+      "energy": 1
+    },
+    {
+      "timeMs": 292256.712,
+      "energy": 1
+    },
+    {
+      "timeMs": 292784.943,
+      "energy": 0
+    },
+    {
+      "timeMs": 293293.878,
+      "energy": 0
+    },
+    {
+      "timeMs": 293802.812,
+      "energy": 0
+    },
+    {
+      "timeMs": 294727.302,
+      "energy": 0
+    },
+    {
+      "timeMs": 295234.58,
+      "energy": 0
+    },
+    {
+      "timeMs": 296214.308,
+      "energy": 0
+    },
+    {
+      "timeMs": 296722.494,
+      "energy": 0
+    },
+    {
+      "timeMs": 297696.213,
+      "energy": 0
+    },
+    {
+      "timeMs": 298200.227,
+      "energy": 0
+    },
+    {
+      "timeMs": 299177.098,
+      "energy": 0
+    },
+    {
+      "timeMs": 299675.896,
+      "energy": 0
+    },
+    {
+      "timeMs": 300174.717,
+      "energy": 0
+    },
+    {
+      "timeMs": 300769.478,
+      "energy": 0
+    },
+    {
+      "timeMs": 301266.417,
+      "energy": 0
+    },
+    {
+      "timeMs": 302132.381,
+      "energy": 0
+    },
+    {
+      "timeMs": 302631.701,
+      "energy": 0
+    },
+    {
+      "timeMs": 303130.998,
+      "energy": 0
+    },
+    {
+      "timeMs": 303734.943,
+      "energy": 0
+    },
+    {
+      "timeMs": 304234.444,
+      "energy": 0
+    },
+    {
+      "timeMs": 305105.034,
+      "energy": 0
+    },
+    {
+      "timeMs": 305604.58,
+      "energy": 0
+    },
+    {
+      "timeMs": 306104.127,
+      "energy": 0
+    },
+    {
+      "timeMs": 306707.415,
+      "energy": 0
+    },
+    {
+      "timeMs": 307207.052,
+      "energy": 0
+    },
+    {
+      "timeMs": 308092.29,
+      "energy": 0
+    }
+  ]
+}

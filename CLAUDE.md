@@ -84,9 +84,19 @@ actually use — see "Two competing designs" below), Subscription
   a gap beat (always costs a rhythm point, no combo shield). Both require
   `character.isJumping` to be false to register — call `landCharacter()`
   between simulated jumps in tests, or nothing happens.
-- `engine/BeatEngine.ts` — tick-based beat clock, `engine.rateJump()` grades
-  PERFECT/GOOD/MISS by proximity to the nearest beat.
-- `engine/PlatformGenerator.ts` — deterministic seeded platform layout.
+- `engine/BeatEngine.ts` — tick-based beat clock driven by a **real beatmap**
+  (array of measured beat timestamps, not `n × 60000/bpm` — live recordings
+  have a lead-in and tempo drift). `currentBeat` starts at -1 (before the
+  first real beat); "beat number" = index into the beatmap everywhere.
+  `engine.rateJump()` grades PERFECT/GOOD/MISS against the nearest real beat.
+- `engine/PlatformGenerator.ts` — places GROUND/GAP/THE_ONE per beat from the
+  beatmap's measured onset-density "energy" (percentile thresholds, never two
+  GAPs in a row, beat 0 always GROUND). Platform x = `SCROLL_SPEED ×
+  timeMs/1000`, so layout follows real time, not beat count.
+- Beatmaps live in `apps/web/public/beatmaps/<track>.json` (committed —
+  derived data, unlike the gitignored mp3s), generated offline by
+  `apps/web/scripts/generate-beatmap.mjs` (`aubio beat` + `aubio onset`).
+  Run once per track; `App.tsx` fetches the JSON at mount alongside the mp3.
 - `scene/components/Character.tsx` — the character model and all its
   animation. **This file has eaten the most iteration this session** — see
   below before touching it.

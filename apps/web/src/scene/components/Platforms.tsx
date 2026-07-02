@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Platform, PlatformGenerator, PlatformType } from "../../engine/PlatformGenerator";
+import { BeatmapEntry, Platform, PlatformGenerator, PlatformType } from "../../engine/PlatformGenerator";
 
 const PLATFORM_COLORS: Record<PlatformType, string> = {
   [PlatformType.GROUND]: "#4a2080",
@@ -14,15 +14,14 @@ const PLATFORM_EMISSIVE: Record<PlatformType, string> = {
 };
 
 interface Props {
-  bpm: number;
-  seed: string;
+  beatmap: BeatmapEntry[];
 }
 
-export function Platforms({ bpm, seed }: Props) {
+export function Platforms({ beatmap }: Props) {
   const platforms = useMemo(() => {
-    const gen = PlatformGenerator.create({ bpm, seed });
-    return gen.generate({ measures: 32 });
-  }, [bpm, seed]);
+    const gen = PlatformGenerator.create({ beatmap });
+    return gen.generate();
+  }, [beatmap]);
 
   return (
     <group>

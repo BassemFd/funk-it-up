@@ -1,6 +1,15 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { createGameStore } from "../../src/store/gameStore";
 
+// Minimal beatmap fixture — flat energy keeps every platform GROUND so
+// theOneBeats/gapBeats stay empty and don't interfere with score/rhythm tests.
+const BEATMAP = [
+  { timeMs: 0, energy: 1 },
+  { timeMs: 500, energy: 1 },
+  { timeMs: 1000, energy: 1 },
+  { timeMs: 1500, energy: 1 },
+];
+
 describe("Feature: GameStore", () => {
   let store: ReturnType<typeof createGameStore>;
 
@@ -31,13 +40,13 @@ describe("Feature: GameStore", () => {
 
   describe("Given the player starts the game", () => {
     it("should transition to PLAYING", () => {
-      store.getState().startGame({ bpm: 98, trackId: "spotify:track:test" });
+      store.getState().startGame({ bpm: 98, trackId: "spotify:track:test", beatmap: BEATMAP });
 
       expect(store.getState().status).toBe("PLAYING");
     });
 
     it("should store the track info", () => {
-      store.getState().startGame({ bpm: 98, trackId: "spotify:track:test" });
+      store.getState().startGame({ bpm: 98, trackId: "spotify:track:test", beatmap: BEATMAP });
 
       expect(store.getState().trackId).toBe("spotify:track:test");
       expect(store.getState().bpm).toBe(98);
@@ -46,7 +55,7 @@ describe("Feature: GameStore", () => {
 
   describe("Given the game is PLAYING", () => {
     beforeEach(() => {
-      store.getState().startGame({ bpm: 98, trackId: "spotify:track:test" });
+      store.getState().startGame({ bpm: 98, trackId: "spotify:track:test", beatmap: BEATMAP });
     });
 
     it("should register a PERFECT jump and update score", () => {
@@ -120,7 +129,7 @@ describe("Feature: GameStore", () => {
 
   describe("Given the game ends", () => {
     it("should expose final score on GAME_OVER", () => {
-      store.getState().startGame({ bpm: 98, trackId: "t" });
+      store.getState().startGame({ bpm: 98, trackId: "t", beatmap: BEATMAP });
       store.getState().registerJump("PERFECT"); // 100pts, combo: 1
       store.getState().landCharacter();
       store.getState().registerJump("MISS"); // combo shield — rhythm intact
@@ -136,7 +145,7 @@ describe("Feature: GameStore", () => {
     });
 
     it("should reset to IDLE on restart", () => {
-      store.getState().startGame({ bpm: 98, trackId: "t" });
+      store.getState().startGame({ bpm: 98, trackId: "t", beatmap: BEATMAP });
       for (let i = 0; i < 5; i++) {
         store.getState().registerJump("MISS");
         store.getState().landCharacter();

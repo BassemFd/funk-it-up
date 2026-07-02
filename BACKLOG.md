@@ -4,21 +4,6 @@ What's left to do on Funk It Up, roughly ordered by priority within each
 section. See `CLAUDE.md` for how the existing code actually works — this
 file is just "what's next", not "how things work".
 
-## 🔴 En cours
-
-- **Moteur de rythme calé sur une vraie carte de temps.** `BeatEngine` et
-  `PlatformGenerator` supposent aujourd'hui un tempo métronomique parfait
-  (`beat = n × intervalle`, temps 1 à `t=0`). Un vrai enregistrement live
-  (11 musiciens) a un décalage d'intro et une variation naturelle de tempo
-  — `aubio beat` sur `01-sweet-addiction.mp3` donne un premier temps à
-  1.58s, pas 0, et des intervalles qui varient de 0.50 à 0.57s. Plan validé :
-  1. Script de prétraitement (`aubio beat` + `aubio onset`) → JSON par
-     morceau avec timestamps réels + densité d'attaques (proxy d'énergie)
-     par temps
-  2. `BeatEngine` avance sur cette vraie grille au lieu de calculer
-  3. `PlatformGenerator` place GROUND/GAP/THE_ONE selon l'énergie mesurée
-     au lieu du motif fixe en boucle (3 plateformes + 1 vide, toujours pareil)
-
 ## 🟠 Prioritaire (dette / décisions en attente)
 
 - **Vérifier le BPM de `04-sleepless-night`** (158.85 détecté) avant de

@@ -1,7 +1,7 @@
 import { createStore } from "zustand/vanilla";
 import { Score, Rhythm } from "@funk-it-up/domain";
 import type { BeatRating } from "@funk-it-up/domain";
-import { PlatformGenerator, PlatformType } from "../engine/PlatformGenerator";
+import { PlatformGenerator, PlatformType, BeatmapEntry } from "../engine/PlatformGenerator";
 
 type GameStatus = "IDLE" | "PLAYING" | "GAME_OVER";
 
@@ -32,9 +32,10 @@ export interface GameState {
   character: CharacterState;
   lastRating: BeatRating | null;
   theOneBeats: Set<number>;
+  gapBeats: Set<number>;
   lastScoredBeat: number | null;
 
-  startGame: (opts: { bpm: number; trackId: string }) => void;
+  startGame: (opts: { bpm: number; trackId: string; beatmap: BeatmapEntry[] }) => void;
   registerJump: (rating: BeatRating, beatNumber?: number) => void;
   missGap: () => void;
   gainRhythm: () => void;
@@ -74,15 +75,19 @@ export function createGameStore() {
     character: { x: 0, isJumping: false },
     lastRating: null,
     theOneBeats: new Set(),
+    gapBeats: new Set(),
     lastScoredBeat: null,
 
-    startGame({ bpm, trackId }) {
-      const generator = PlatformGenerator.create({ bpm, seed: trackId });
-      const platforms = generator.generate({ measures: 32 });
+    startGame({ bpm, trackId, beatmap }) {
+      const generator = PlatformGenerator.create({ beatmap });
+      const platforms = generator.generate();
       const theOneBeats = new Set(
         platforms
           .filter((p) => p.type === PlatformType.THE_ONE)
           .map((p) => p.beatNumber),
+      );
+      const gapBeats = new Set(
+        platforms.filter((p) => p.type === PlatformType.GAP).map((p) => p.beatNumber),
       );
       set({
         status: "PLAYING",
@@ -93,6 +98,7 @@ export function createGameStore() {
         character: { x: 0, isJumping: false },
         lastRating: null,
         theOneBeats,
+        gapBeats,
         lastScoredBeat: null,
       });
     },
@@ -192,6 +198,7 @@ export function createGameStore() {
         character: { x: 0, isJumping: false },
         lastRating: null,
         theOneBeats: new Set(),
+        gapBeats: new Set(),
         lastScoredBeat: null,
       });
     },

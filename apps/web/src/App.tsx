@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback, useMemo, useState } from "react";
 import { GameScene } from "./scene/GameScene";
 import { HUD } from "./components/HUD";
 import { StartScreen } from "./components/StartScreen";
@@ -7,28 +7,45 @@ import { LeaderboardModal } from "./components/LeaderboardModal";
 import { CameraTiltControls } from "./components/CameraTiltControls";
 import { useGameStore, gameStore } from "./store/useGameStore";
 import { BeatEngine } from "./engine/BeatEngine";
+import { BeatmapEntry } from "./engine/PlatformGenerator";
 import { useBeatEngine } from "./hooks/useBeatEngine";
 import { musicPlayer } from "./audio/MusicPlayer";
 
 // BPM measured with `aubio tempo` (no Spotify audio-features endpoint for
-// new apps anymore — see CLAUDE.md "Real audio — not Spotify"). This is an
-// automated estimate, not ear-verified — flag it if the beat feels off.
+// new apps anymore — see CLAUDE.md "Real audio — not Spotify"). Kept only
+// for display/gait-animation purposes now — actual beat timing/platform
+// placement comes from the real beatmap below, not this average value.
 const DEFAULT_BPM = 113;
 const DEFAULT_TRACK = "sweet-addiction";
 const TRACK_URL = "/audio/01-sweet-addiction.mp3";
+const BEATMAP_URL = "/beatmaps/sweet-addiction.json";
+
+const EMPTY_BEATMAP: BeatmapEntry[] = [];
 
 export function App() {
   const status = useGameStore((s) => s.status);
-  const bpm = useGameStore((s) => s.bpm) ?? DEFAULT_BPM;
-  const engine: BeatEngine = useBeatEngine(bpm);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [musicReady, setMusicReady] = useState(false);
+  const [beatmap, setBeatmap] = useState<BeatmapEntry[]>(EMPTY_BEATMAP);
+
+  // Memoized so this array reference only changes when beatmap itself does
+  // (i.e. once, on load) — useBeatEngine recreates the engine whenever this
+  // reference changes, so a fresh array every render would silently wipe
+  // BeatEngine's progress on every unrelated re-render.
+  const beatTimestampsMs = useMemo(() => beatmap.map((b) => b.timeMs), [beatmap]);
+  const engine: BeatEngine = useBeatEngine(beatTimestampsMs);
+  const trackReady = musicReady && beatmap !== EMPTY_BEATMAP;
 
   useEffect(() => {
     musicPlayer
       .load(TRACK_URL)
       .then(() => setMusicReady(true))
       .catch((err) => console.error("Failed to load track:", err));
+
+    fetch(BEATMAP_URL)
+      .then((res) => res.json())
+      .then((data: { beats: BeatmapEntry[] }) => setBeatmap(data.beats))
+      .catch((err) => console.error("Failed to load beatmap:", err));
   }, []);
 
   const startGame = useCallback(() => {
@@ -37,8 +54,9 @@ export function App() {
     gameStore.getState().startGame({
       bpm: DEFAULT_BPM,
       trackId: DEFAULT_TRACK,
+      beatmap,
     });
-  }, [engine]);
+  }, [engine, beatmap]);
 
   // Keyboard & touch input
   useEffect(() => {
@@ -46,8 +64,9 @@ export function App() {
       const { status, registerJump } = gameStore.getState();
       if (status !== "PLAYING") return;
 
-      const rating = engine.rateJump(engine.elapsedMs);
-      const beatNumber = Math.round(engine.elapsedMs / engine.intervalMs);
+      const atMs = engine.elapsedMs;
+      const rating = engine.rateJump(atMs);
+      const beatNumber = engine.nearestBeatIndex(atMs);
       registerJump(rating, beatNumber);
     };
 
@@ -73,10 +92,10 @@ export function App() {
   return (
     <div style={{ width: "100vw", height: "100vh", position: "relative" }}>
       {/* Three.js canvas always mounted to keep context alive */}
-      <GameScene engine={engine} bpm={bpm} trackId={DEFAULT_TRACK} />
+      <GameScene engine={engine} beatmap={beatmap} />
 
       {status === "PLAYING" && <HUD />}
-      {status === "IDLE" && <StartScreen onStart={startGame} musicReady={musicReady} />}
+      {status === "IDLE" && <StartScreen onStart={startGame} musicReady={trackReady} />}
       {status === "GAME_OVER" && <GameOverScreen />}
 
       <button

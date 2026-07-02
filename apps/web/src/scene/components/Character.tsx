@@ -3,8 +3,9 @@ import { useFrame } from "@react-three/fiber";
 import { Group } from "three";
 import { useGameStore } from "../../store/useGameStore";
 import { gameStore } from "../../store/useGameStore";
-import { PLATFORM_SPACING } from "../../engine/PlatformGenerator";
+import { SCROLL_SPEED } from "../../engine/PlatformGenerator";
 import { characterVisualX } from "../characterVisualX";
+import { musicPlayer } from "../../audio/MusicPlayer";
 
 // Must match Platforms.tsx: PLATFORM_Y (0) + height (0.4) / 2 — the world Y
 // where a GROUND/THE_ONE platform's top surface actually sits. The whole
@@ -54,28 +55,21 @@ export function Character() {
   const jumpStartRef = useRef<number | null>(null);
   const landingStartRef = useRef<number | null>(null);
   const prevIsJumpingRef = useRef(false);
-  const prevStatusRef = useRef<string>("IDLE");
 
   const isJumping = useGameStore((s) => s.character.isJumping);
   const bpm = useGameStore((s) => s.bpm) ?? 98;
   const status = useGameStore((s) => s.status);
 
-  // units per second: one platform per beat interval
-  const speedRef = useRef(0);
-  speedRef.current = PLATFORM_SPACING / ((60 / bpm) * 1000) * 1000;
-
-  useFrame(({ clock }, delta) => {
+  useFrame(({ clock }) => {
     if (!meshRef.current || !squashRef.current) return;
 
-    // Reset visual position on game start
-    if (prevStatusRef.current !== "PLAYING" && status === "PLAYING") {
-      characterVisualX.current = 0;
-    }
-    prevStatusRef.current = status;
-
-    // Continuous forward movement
+    // Position is a pure function of the audio clock (SCROLL_SPEED × elapsed
+    // seconds), not accumulated per-frame — this is the same formula
+    // PlatformGenerator uses to place platforms, off the same clock
+    // (musicPlayer.getElapsedMs()), so the character can never drift out of
+    // sync with where a platform actually is.
     if (status === "PLAYING") {
-      characterVisualX.current += speedRef.current * delta;
+      characterVisualX.current = (SCROLL_SPEED * musicPlayer.getElapsedMs()) / 1000;
     }
     meshRef.current.position.x = characterVisualX.current;
 
