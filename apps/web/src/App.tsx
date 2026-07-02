@@ -10,12 +10,11 @@ import { BeatEngine } from "./engine/BeatEngine";
 import { useBeatEngine } from "./hooks/useBeatEngine";
 import { musicPlayer } from "./audio/MusicPlayer";
 
-// TODO: placeholder BPM — real Jéroboam tracks are wired in (see
-// apps/web/public/audio/), but nobody has measured their actual BPM yet.
-// Platform spacing/beat timing will be wrong until this is the real value.
-// See CLAUDE.md "Real audio — not Spotify" section.
-const DEFAULT_BPM = 98;
-const DEFAULT_TRACK = "jeroboam-funk-01";
+// BPM measured with `aubio tempo` (no Spotify audio-features endpoint for
+// new apps anymore — see CLAUDE.md "Real audio — not Spotify"). This is an
+// automated estimate, not ear-verified — flag it if the beat feels off.
+const DEFAULT_BPM = 113;
+const DEFAULT_TRACK = "sweet-addiction";
 const TRACK_URL = "/audio/01-sweet-addiction.mp3";
 
 export function App() {
