@@ -1,6 +1,44 @@
-import { cameraOrbit } from "../scene/cameraOrbit";
+import { useEffect } from "react";
+import { cameraOrbit, resetCameraOrbit } from "../scene/cameraOrbit";
 
 type Direction = keyof typeof cameraOrbit.held;
+
+const ARROW_KEY_DIRECTIONS: Record<string, Direction> = {
+  ArrowUp: "up",
+  ArrowDown: "down",
+  ArrowLeft: "left",
+  ArrowRight: "right",
+};
+
+// Keyboard control for the camera: arrow keys orbit (held down = keep
+// orbiting, same as the D-pad buttons), R snaps back to the default view.
+function useCameraKeyboardControls() {
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      const direction = ARROW_KEY_DIRECTIONS[e.code];
+      if (direction) {
+        e.preventDefault();
+        cameraOrbit.held[direction] = true;
+        return;
+      }
+      if (e.code === "KeyR") {
+        resetCameraOrbit();
+      }
+    };
+
+    const onKeyUp = (e: KeyboardEvent) => {
+      const direction = ARROW_KEY_DIRECTIONS[e.code];
+      if (direction) cameraOrbit.held[direction] = false;
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keyup", onKeyUp);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("keyup", onKeyUp);
+    };
+  }, []);
+}
 
 // Held-while-pressed buttons: press and hold to keep orbiting, release to
 // stop. Mirrors the pattern of a physical D-pad rather than one-shot clicks.
@@ -24,6 +62,8 @@ function usePressHandlers(direction: Direction) {
 }
 
 export function CameraTiltControls() {
+  useCameraKeyboardControls();
+
   const handlersUp = usePressHandlers("up");
   const handlersDown = usePressHandlers("down");
   const handlersLeft = usePressHandlers("left");
@@ -31,8 +71,7 @@ export function CameraTiltControls() {
 
   const reset = (e: React.SyntheticEvent) => {
     e.stopPropagation();
-    cameraOrbit.yaw = 0;
-    cameraOrbit.pitch = 0.033;
+    resetCameraOrbit();
   };
 
   return (

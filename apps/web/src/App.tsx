@@ -38,7 +38,9 @@ export function App() {
     };
 
     const onKey = (e: KeyboardEvent) => {
-      if (e.code === "Space" || e.code === "ArrowUp") {
+      // Arrow keys now drive the camera (see CameraTiltControls) — only
+      // Space triggers a jump.
+      if (e.code === "Space") {
         e.preventDefault();
         handleJump();
       }
