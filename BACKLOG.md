@@ -6,9 +6,15 @@ file is just "what's next", not "how things work".
 
 ## 🟠 Prioritaire (dette / décisions en attente)
 
-- **Vérifier le BPM de `04-sleepless-night`** (158.85 détecté) avant de
-  jamais le brancher — probable erreur d'octave, le vrai tempo est peut-être
-  ~79. Écouter le morceau et comparer avant d'utiliser cette valeur.
+- **Trancher le tempo de `04-sleepless-night` à l'oreille.** L'erreur
+  d'octave est maintenant quasi certaine : `aubio tempo` dit 158.85, mais la
+  grille `aubio beat` du beatmap généré donne un intervalle médian de 343ms
+  (≈ 174.6 BPM effectifs) — le tempo ressenti est probablement ~87. Le
+  morceau est sélectionnable dans le jeu mais sa grille est deux fois trop
+  dense (un temps tous les 343ms). Après vérification à l'oreille : soit
+  régénérer le beatmap en ne gardant qu'un temps sur deux (downsample dans
+  `scripts/generate-beatmap.mjs`), soit accepter la densité comme "niveau
+  difficile".
 - **`GameSessionResolver` (API) à trancher** : implémente un flux de session
   complet côté serveur (`startSession`/`jump`/`gainRhythm`/`finishSession`)
   que le client web n'utilise pas du tout (il joue en local et n'appelle que
@@ -17,11 +23,6 @@ file is just "what's next", not "how things work".
 
 ## 🟡 Fonctionnalités prévues
 
-- **Niveaux par morceau** — permettre de jouer les 8 morceaux de l'album, pas
-  juste `sweet-addiction`. Dépend du point "moteur de rythme" ci-dessus
-  (chaque morceau a besoin de sa propre carte de temps). Implique un écran
-  de sélection de morceau et un `BPM`/`trackId` dynamique au lieu des
-  constantes fixes dans `App.tsx`.
 - **PWA icônes/manifest** — polish, pas fonctionnel actuellement.
 - **CI** — aucun pipeline configuré.
 - **`packages/ui`** — design system Storybook, mentionné en tout début de

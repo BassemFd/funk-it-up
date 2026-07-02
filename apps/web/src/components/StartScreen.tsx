@@ -3,10 +3,14 @@ import { useMutation } from "@apollo/client/react";
 import { CombinedGraphQLErrors } from "@apollo/client/errors";
 import { REGISTER_PLAYER, LOGIN_PLAYER } from "../api/queries";
 import { getStoredAuth, setStoredAuth, clearStoredAuth } from "../api/auth";
+import { Track } from "../tracks";
 
 interface Props {
   onStart: () => void;
   musicReady: boolean;
+  tracks: Track[];
+  selectedTrackId: string;
+  onSelectTrack: (id: string) => void;
 }
 
 type AuthMode = "register" | "login";
@@ -32,7 +36,7 @@ function errorCode(err: unknown): string | undefined {
   return undefined;
 }
 
-export function StartScreen({ onStart, musicReady }: Props) {
+export function StartScreen({ onStart, musicReady, tracks, selectedTrackId, onSelectTrack }: Props) {
   const [auth, setAuth] = useState(() => getStoredAuth());
   const [mode, setMode] = useState<AuthMode>("register");
   const [name, setName] = useState("");
@@ -98,6 +102,22 @@ export function StartScreen({ onStart, musicReady }: Props) {
             <p style={styles.welcome}>
               Welcome back, <span style={styles.welcomeName}>{auth.displayName}</span>
             </p>
+            <div style={styles.trackList}>
+              {tracks.map((t, i) => {
+                const selected = t.id === selectedTrackId;
+                return (
+                  <button
+                    key={t.id}
+                    style={{ ...styles.trackBtn, ...(selected ? styles.trackBtnSelected : null) }}
+                    onClick={() => onSelectTrack(t.id)}
+                  >
+                    <span style={styles.trackNum}>{String(i + 1).padStart(2, "0")}</span>
+                    <span style={styles.trackTitle}>{t.title}</span>
+                    <span style={styles.trackBpm}>{Math.round(t.bpm)} BPM</span>
+                  </button>
+                );
+              })}
+            </div>
             <button style={styles.btn} onClick={onStart} disabled={!musicReady}>
               {musicReady ? "PRESS TO PLAY" : "LOADING TRACK…"}
             </button>
@@ -202,6 +222,47 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: 14,
     color: "#c0a0e0",
     marginTop: 8,
+  },
+  trackList: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 4,
+    width: "100%",
+    maxHeight: 220,
+    overflowY: "auto",
+  },
+  trackBtn: {
+    display: "flex",
+    alignItems: "baseline",
+    gap: 10,
+    width: "100%",
+    padding: "8px 12px",
+    fontFamily: "monospace",
+    fontSize: 13,
+    letterSpacing: 1,
+    textAlign: "left",
+    background: "#2a0a50",
+    border: "2px solid #6030a0",
+    borderRadius: 6,
+    color: "#c0a0e0",
+    cursor: "pointer",
+  },
+  trackBtnSelected: {
+    background: "#3a1060",
+    border: "2px solid #e040fb",
+    color: "#f0e060",
+    boxShadow: "0 0 12px rgba(224, 64, 251, 0.5)",
+  },
+  trackNum: {
+    color: "#9060c0",
+    fontSize: 11,
+  },
+  trackTitle: {
+    flex: 1,
+  },
+  trackBpm: {
+    fontSize: 10,
+    color: "#9060c0",
   },
   welcomeName: {
     color: "#f0e060",

@@ -12,17 +12,25 @@ export class MusicPlayer {
   private source: AudioBufferSourceNode | null = null;
   private startedAtContextTime = 0;
   private playing = false;
+  private loadSeq = 0;
 
   private ensureContext(): AudioContext {
     if (!this.context) this.context = new AudioContext();
     return this.context;
   }
 
+  // Concurrent loads can finish out of order (track switched while the
+  // previous mp3 was still decoding) — only the most recent call is allowed
+  // to install its buffer, so the audio can never desync from the UI's idea
+  // of which track is selected.
   async load(url: string): Promise<void> {
+    const seq = ++this.loadSeq;
     const ctx = this.ensureContext();
     const response = await fetch(url);
     const arrayBuffer = await response.arrayBuffer();
-    this.buffer = await ctx.decodeAudioData(arrayBuffer);
+    const buffer = await ctx.decodeAudioData(arrayBuffer);
+    if (seq !== this.loadSeq) return; // a newer load superseded this one
+    this.buffer = buffer;
   }
 
   get isLoaded(): boolean {

@@ -247,18 +247,21 @@ automated estimate, not ear-verified:
 
 | Track | BPM (measured) |
 |---|---|
-| 01-sweet-addiction | 113.42 — **wired in**, `App.tsx`'s `DEFAULT_BPM` |
+| 01-sweet-addiction | 113.42 |
 | 02-feeling-something | 100.74 |
 | 03-say-yeah | 122.84 |
-| 04-sleepless-night | 158.85 — possible octave error (half/double the real tempo), unverified, sanity-check by ear before using |
+| 04-sleepless-night | 158.85 — octave error near-certain: the generated beatmap's median beat interval is 343ms (≈174.6 effective BPM), real felt tempo is probably ~87. See BACKLOG.md |
 | 05-unstoppable | 127.40 |
 | 06-surrender | 106.88 |
 | 07-light-up | 127.87 |
 | 08-the-game | 96.30 |
 
-Only track 01 is actually wired up (single `DEFAULT_TRACK`, no track-
-selection UI). Don't re-run `aubio` on these unless the files changed —
-the numbers are already here.
+All 8 tracks are wired up: `src/tracks.ts` holds the track list (id, title,
+display BPM, audio + beatmap URLs), the StartScreen shows a track selector,
+and `App.tsx` (re)loads mp3 + beatmap when the selection changes. These BPM
+values are display/gait-animation only — real timing comes from the
+beatmaps. Don't re-run `aubio` on these unless the files changed — the
+numbers are already here.
 
 ## Verifying changes
 

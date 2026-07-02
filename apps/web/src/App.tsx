@@ -10,15 +10,7 @@ import { BeatEngine } from "./engine/BeatEngine";
 import { BeatmapEntry } from "./engine/PlatformGenerator";
 import { useBeatEngine } from "./hooks/useBeatEngine";
 import { musicPlayer } from "./audio/MusicPlayer";
-
-// BPM measured with `aubio tempo` (no Spotify audio-features endpoint for
-// new apps anymore — see CLAUDE.md "Real audio — not Spotify"). Kept only
-// for display/gait-animation purposes now — actual beat timing/platform
-// placement comes from the real beatmap below, not this average value.
-const DEFAULT_BPM = 113;
-const DEFAULT_TRACK = "sweet-addiction";
-const TRACK_URL = "/audio/01-sweet-addiction.mp3";
-const BEATMAP_URL = "/beatmaps/sweet-addiction.json";
+import { TRACKS, DEFAULT_TRACK_ID } from "./tracks";
 
 const EMPTY_BEATMAP: BeatmapEntry[] = [];
 
@@ -27,6 +19,8 @@ export function App() {
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [musicReady, setMusicReady] = useState(false);
   const [beatmap, setBeatmap] = useState<BeatmapEntry[]>(EMPTY_BEATMAP);
+  const [trackId, setTrackId] = useState(DEFAULT_TRACK_ID);
+  const track = TRACKS.find((t) => t.id === trackId) ?? TRACKS[0]!;
 
   // Memoized so this array reference only changes when beatmap itself does
   // (i.e. once, on load) — useBeatEngine recreates the engine whenever this
@@ -36,27 +30,38 @@ export function App() {
   const engine: BeatEngine = useBeatEngine(beatTimestampsMs);
   const trackReady = musicReady && beatmap !== EMPTY_BEATMAP;
 
+  // (Re)load audio + beatmap whenever the selected track changes. The
+  // `cancelled` flag keeps a slow load from a previously selected track
+  // from clobbering the currently selected one's state.
   useEffect(() => {
+    let cancelled = false;
+    setMusicReady(false);
+    setBeatmap(EMPTY_BEATMAP);
+
     musicPlayer
-      .load(TRACK_URL)
-      .then(() => setMusicReady(true))
+      .load(track.audioUrl)
+      .then(() => !cancelled && setMusicReady(true))
       .catch((err) => console.error("Failed to load track:", err));
 
-    fetch(BEATMAP_URL)
+    fetch(track.beatmapUrl)
       .then((res) => res.json())
-      .then((data: { beats: BeatmapEntry[] }) => setBeatmap(data.beats))
+      .then((data: { beats: BeatmapEntry[] }) => !cancelled && setBeatmap(data.beats))
       .catch((err) => console.error("Failed to load beatmap:", err));
-  }, []);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [track]);
 
   const startGame = useCallback(() => {
     engine.reset();
     musicPlayer.play();
     gameStore.getState().startGame({
-      bpm: DEFAULT_BPM,
-      trackId: DEFAULT_TRACK,
+      bpm: track.bpm,
+      trackId: track.id,
       beatmap,
     });
-  }, [engine, beatmap]);
+  }, [engine, beatmap, track]);
 
   // Keyboard & touch input
   useEffect(() => {
@@ -95,7 +100,15 @@ export function App() {
       <GameScene engine={engine} beatmap={beatmap} />
 
       {status === "PLAYING" && <HUD />}
-      {status === "IDLE" && <StartScreen onStart={startGame} musicReady={trackReady} />}
+      {status === "IDLE" && (
+        <StartScreen
+          onStart={startGame}
+          musicReady={trackReady}
+          tracks={TRACKS}
+          selectedTrackId={trackId}
+          onSelectTrack={setTrackId}
+        />
+      )}
       {status === "GAME_OVER" && <GameOverScreen />}
 
       <button
@@ -109,7 +122,7 @@ export function App() {
       <CameraTiltControls />
 
       {showLeaderboard && (
-        <LeaderboardModal trackId={DEFAULT_TRACK} onClose={() => setShowLeaderboard(false)} />
+        <LeaderboardModal trackId={track.id} onClose={() => setShowLeaderboard(false)} />
       )}
     </div>
   );
