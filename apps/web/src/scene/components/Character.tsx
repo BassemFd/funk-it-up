@@ -137,8 +137,10 @@ export function Character() {
       if (kneeRRef.current) kneeRRef.current.rotation.x = kneeR;
       if (shoulderLRef.current) shoulderLRef.current.rotation.x = -swing * ARM_SWING;
       if (shoulderRRef.current) shoulderRRef.current.rotation.x = swing * ARM_SWING;
-      if (elbowLRef.current) elbowLRef.current.rotation.x = ELBOW_BEND;
-      if (elbowRRef.current) elbowRRef.current.rotation.x = ELBOW_BEND;
+      // Same convention as the knee: positive rotation.x bends a joint
+      // backward, negative bends it forward — elbows only ever bend forward.
+      if (elbowLRef.current) elbowLRef.current.rotation.x = -ELBOW_BEND;
+      if (elbowRRef.current) elbowRRef.current.rotation.x = -ELBOW_BEND;
     } else {
       if (hipLRef.current) hipLRef.current.rotation.x = 0;
       if (hipRRef.current) hipRRef.current.rotation.x = 0;
