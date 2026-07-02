@@ -3,9 +3,10 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { characterVisualX } from "../characterVisualX";
 import { gameStore } from "../../store/useGameStore";
 
-const CAMERA_OFFSET_X = -6;
-const CAMERA_Y = 4;
-const CAMERA_Z = 14;
+const CAMERA_OFFSET_X = -5;
+const CAMERA_Y = 2.4;
+const CAMERA_Z = 11;
+const LOOK_AT_Y = 1.1;
 const POS_LERP = 0.1;
 
 export function FollowCamera() {
@@ -28,9 +29,10 @@ export function FollowCamera() {
     camera.position.y = CAMERA_Y;
     camera.position.z = CAMERA_Z;
 
-    // Fixed rotation: always look 6 units ahead of camera position.
-    // Direction vector (6, -3, -14) is constant — pure translation, zero camera rotation.
-    camera.lookAt(camera.position.x - CAMERA_OFFSET_X, 1, 0);
+    // Fixed rotation: always look at the same relative point ahead of the
+    // camera — a constant direction vector, pure translation, zero camera
+    // rotation drift.
+    camera.lookAt(camera.position.x - CAMERA_OFFSET_X, LOOK_AT_Y, 0);
   });
 
   return null;
