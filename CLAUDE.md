@@ -6,7 +6,8 @@ Three.js/react-three-fiber, and PWA in one coherent full-stack app.
 
 Read this file before doing anything else in this repo. It exists so a new
 session can pick up without re-deriving context that already cost real time
-to figure out.
+to figure out. See `BACKLOG.md` for what's left to do, ordered by priority —
+this file is just "how things work and why", not a task list.
 
 ## Architecture — pnpm/turbo monorepo
 
@@ -15,7 +16,7 @@ funk-it-up/
 ├── packages/domain/   pure TypeScript game rules — zero framework deps
 ├── apps/api/          Apollo Server 4 (GraphQL + WS) + Redis
 ├── apps/web/          React + react-three-fiber game client
-└── packages/ui/       empty — never started (Storybook design system, someday)
+└── packages/ui/       empty — see BACKLOG.md
 ```
 
 `packages/domain` is imported by both `api` and `web` as `@funk-it-up/domain`.
@@ -183,14 +184,11 @@ broken, just dead weight from the client's perspective — worth deciding
 whether to delete it or actually wire something up to it (e.g. server-side
 score validation/anti-cheat) if this comes up again.
 
-## Known-empty / not started
+## What's left to do
 
-- `packages/ui` — Storybook design system, mentioned early on, never begun.
-- Prisma/PostgreSQL — Player/GameSession persistence is Redis + in-memory
-  only; a durable relational store was floated but Redis ended up covering
-  everything actually needed (accounts + leaderboard) so it never happened.
-- PWA icons/manifest polish.
-- No CI pipeline configured.
+See `BACKLOG.md` — don't duplicate it here. It's ordered by priority and
+gets updated as things move/complete; this file only explains how what
+already exists actually works.
 
 ## Real audio — not Spotify (deliberately ruled out)
 
